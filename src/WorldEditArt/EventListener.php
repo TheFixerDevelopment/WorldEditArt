@@ -17,6 +17,7 @@ namespace WorldEditArt;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use WorldEditArt\User\PlayerUser;
 
@@ -26,18 +27,34 @@ class EventListener implements Listener{
 
 	public function __construct(WorldEditArt $main){
 		$this->main = $main;
+		$main->getServer()->getPluginManager()->registerEvents($this, $main);
 	}
 
 	public function e_join(PlayerJoinEvent $event){
 		$data = $this->main->getDataProvider()->getUserData(PlayerUser::TYPE_NAME, strtolower($event->getPlayer()->getName()));
 		$user = new PlayerUser($this->main, $event->getPlayer(), $data);
-		$this->main->addUser($user);
+		$this->main->addPlayerUser($user);
 	}
 
 	public function e_quit(PlayerQuitEvent $event){
-		$user = $this->main->getUser($event->getPlayer());
+		$user = $this->main->getPlayerUser($event->getPlayer());
 		if($user !== null){
-			$this->main->endUser($user);
+			$user->close();
 		}
+	}
+
+	/**
+	 * @param PlayerMoveEvent $event
+	 *
+	 * @priority        HIGH
+	 * @ignoreCancelled true
+	 */
+	public function e_move(PlayerMoveEvent $event){
+		$user = $this->main->getPlayerUser($event->getPlayer());
+		if($user === null){
+			return;
+		}
+		$this->main->compareZones($event->getFrom(), $event->getTo(), $entered, $left);
+		// TODO: Send messages
 	}
 }

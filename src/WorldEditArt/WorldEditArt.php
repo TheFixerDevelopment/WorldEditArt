@@ -15,13 +15,18 @@
 
 namespace WorldEditArt;
 
+use pocketmine\level\Level;
+use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use WorldEditArt\Command\WorldEditArtCommand;
 use WorldEditArt\DataProvider\DataProvider;
+use WorldEditArt\DataProvider\Model\Zone;
 use WorldEditArt\DataProvider\SerializedDataProvider;
 use WorldEditArt\Lang\LanguageManager;
+use WorldEditArt\User\PlayerUser;
 use WorldEditArt\User\WorldEditArtUser;
 use WorldEditArt\Utils\Fridge;
 
@@ -39,8 +44,8 @@ class WorldEditArt extends PluginBase{
 	/** @var EventListener $listener */
 	private $listener;
 
-	/** @var WorldEditArtUser[] $users */
-	private $users = [];
+	/** @var WorldEditArtUser[] $playerUsers */
+	public $playerUsers = [];
 
 	public static function getPluginName() : string{
 		return self::$PLUGIN_NAME;
@@ -107,16 +112,60 @@ class WorldEditArt extends PluginBase{
 	 *
 	 * @return WorldEditArtUser|null
 	 */
-	public function getUser(Player $player){
-		return $this->users[$player->getId()] ?? null;
+	public function getPlayerUser(Player $player){
+		return $this->playerUsers[strtolower($player->getName())] ?? null;
 	}
 
-	public function addUser(WorldEditArtUser $user){
-		$this->users[$user->getUniqueName()] = $user;
+	public function addPlayerUser(PlayerUser $user){
+		$this->playerUsers[strtolower($user->getName())] = $user;
 	}
 
-	public function endUser(WorldEditArtUser $user){
-		$this->users[$user->getUniqueName()]->close();
-		unset($this->users[$user->getUniqueName()]);
+	/**
+	 * @param string       $name
+	 * @param int          $type
+	 * @param Level|string $level
+	 * @param Vector3      $start
+	 * @param Vector3      $end
+	 *
+	 * @return Zone
+	 *
+	 * @throws \InvalidArgumentException if zone of the same name already exists
+	 */
+	public function createZone(string $name, int $type, Level $level, Vector3 $start, Vector3 $end) : Zone{
+		if($this->dataProvider->isZoneExistent($name)){
+			throw new \InvalidArgumentException("Zone of same name already exists");
+		}
+		$zone = new Zone($name, $type, $level->getName(), $start, $end);
+		return $this->dataProvider->addZone($zone) ? $zone : null;
+	}
+
+	public function getZones(Position $position) : array{
+		$result = [];
+		foreach($this->dataProvider->getZones() as $zone){
+			if($zone->isInside($position)){
+				$result[$zone->getName()] = $zone->getType();
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * @param Position $from     old position of movement
+	 * @param Position $to       new position of movement
+	 * @param int[]    &$entered output parameter for zones entered: [zone name => zone type]
+	 * @param int[]    &$left    output parameter for zones left: [zone name => zone type]
+	 */
+	public function compareZones(Position $from, Position $to, &$entered, &$left){
+		$entered = [];
+		$left = [];
+		foreach($this->dataProvider->getZones() as $zone){
+			$fromInside = $zone->isInside($from);
+			$toInside = $zone->isInside($to);
+			if($fromInside and !$toInside){
+				$left[$zone->getName()] = $zone->getType();
+			}elseif(!$fromInside and $toInside){
+				$entered[$zone->getName()] = $zone->getType();
+			}
+		}
 	}
 }

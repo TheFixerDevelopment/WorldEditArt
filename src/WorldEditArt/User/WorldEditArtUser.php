@@ -27,16 +27,19 @@ abstract class WorldEditArtUser implements Permissible{
 	private $main;
 	/** @var UserData $data */
 	private $data;
+	/** @var CassetteQueue $queue */
+	private $queue;
 
 	/** @var Space[] $selections */
 	private $selections = [];
 
-	/** @var bool $closed */
-	private $closed = false;
+	/** @var int $closeTime */
+	private $closeTime = 0;
 
 	public function __construct(WorldEditArt $main, UserData $data){
 		$this->main = $main;
 		$this->data = $data;
+		$this->queue = new CassetteQueue($this);
 	}
 
 	public abstract function getType() : string;
@@ -47,7 +50,7 @@ abstract class WorldEditArtUser implements Permissible{
 
 	public abstract function getLocation() : Location;
 
-	public function getUniqueName() : string{
+	public final function getUniqueName() : string{
 		return $this->getType() . "/" . $this->getName();
 	}
 
@@ -72,16 +75,21 @@ abstract class WorldEditArtUser implements Permissible{
 	}
 
 	public function isClosed() : bool{
-		return $this->closed;
+		return $this->closeTime > 0; // oh no, we are facing the Year 2106 problem!
+	}
+
+	public function getCloseTime() : int{
+		return $this->isClosed() ? -1 : (time() - $this->closeTime);
 	}
 
 	public function close(){
 		$this->save();
-		$this->closed = true;
+		$this->closeTime = time();
 	}
 
 	/**
 	 * @param string $name
+	 *
 	 * @return Space|null
 	 */
 	public function getSelection(string $name = "default"){
@@ -89,7 +97,7 @@ abstract class WorldEditArtUser implements Permissible{
 	}
 
 	public function setSelection(Space $space, string $name = "default"){
-
+		$this->selections[$name] = $space;
 	}
 
 	public function canBuild(Position $pos) : bool{

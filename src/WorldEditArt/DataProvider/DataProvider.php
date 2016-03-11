@@ -16,9 +16,28 @@
 namespace WorldEditArt\DataProvider;
 
 use WorldEditArt\DataProvider\Model\UserData;
+use WorldEditArt\DataProvider\Model\Zone;
 
 interface DataProvider{
 	public function getUserData(string $type, string $name) : UserData;
 
 	public function saveUserData(UserData $data);
+
+	/**
+	 * @return Zone[]
+	 */
+	public function getZones() : array;
+
+	public function isZoneExistent(string $name) : bool;
+
+	public function addZone(Zone $zone) : bool;
+
+	public function removeZone(string $zoneName) : bool;
+
+	/**
+	 * @param string $zoneName
+	 *
+	 * @return Zone|null
+	 */
+	public function getZone(string $zoneName);
 }

@@ -25,16 +25,19 @@ class RightCylindricalSpace extends Space{
 	const DIRECTION_Y = 1;
 	const DIRECTION_Z = 2;
 
-	/** @var Vector3 */
+	/** @var Vector3 $center */
 	private $center;
-	/** @var float */
+	/** @var float $radius */
 	private $radius;
 	/** @var float $height */
 	private $height;
+	/** @var int $direction */
+	private $direction;
 
-	public function __construct(Position $center, float $radius = -1.0, float $height = -1.0, int $direction = self::DIRECTION_Y){
+	public function __construct(Position $center, int $direction = self::DIRECTION_Y, float $radius = -1.0, float $height = -1.0){
 		parent::__construct($center->getLevel());
 		$this->center = $center->floor();
+		$this->direction = $direction;
 		if($radius !== -1.0){
 			$this->radius = $radius;
 		}
@@ -44,17 +47,11 @@ class RightCylindricalSpace extends Space{
 	}
 
 	public function getSolidBlockStream() : BlockStream{
-		// TODO: Implement getSolidBlockStream() method.
+		return new SolidRightCylinderBlockStream($this);
 	}
 
-	/**
-	 * @param int $padding the thickness inside, default 1
-	 * @param int $margin  the thickness outside, default 0
-	 *
-	 * @return BlockStream
-	 */
 	public function getHollowBlockStream(int $padding = 1, int $margin = 0) : BlockStream{
-		// TODO: Implement getHollowBlockStream() method.
+		return new HollowRightCylinderBlockStream($this, $padding, $margin);
 	}
 
 	public function getApproxBlockCount() : int{
@@ -62,6 +59,57 @@ class RightCylindricalSpace extends Space{
 	}
 
 	protected function isInsideImpl(Vector3 $pos) : bool{
+	}
 
+	public function getRadius() : float{
+		$this->throwValid();
+		return $this->radius;
+	}
+
+	public function getCenter() : Vector3{
+		return $this->center;
+	}
+
+	public function getDirection() : int{
+		return $this->direction;
+	}
+
+	public function getHeight() : float{
+		$this->throwValid();
+		return $this->height;
+	}
+
+	public function isValid() : bool{
+		return isset($this->radius, $this->height);
+	}
+
+	public function axis0() : string{
+		if($this->direction === self::DIRECTION_X){
+			return "x";
+		}elseif($this->direction === self::DIRECTION_Y){
+			return "y";
+		}else{
+			return "z";
+		}
+	}
+
+	public function axis1() : string{
+		if($this->direction === self::DIRECTION_X){
+			return "y";
+		}elseif($this->direction === self::DIRECTION_Y){
+			return "z";
+		}else{
+			return "x";
+		}
+	}
+
+	public function axis2() : string{
+		if($this->direction === self::DIRECTION_X){
+			return "z";
+		}elseif($this->direction === self::DIRECTION_Y){
+			return "x";
+		}else{
+			return "y";
+		}
 	}
 }

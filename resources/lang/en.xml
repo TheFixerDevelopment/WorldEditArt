@@ -13,8 +13,8 @@
 	@author LegendsOfMCPE
 -->
 
-<language name="en" version="1.0" rel="1.0">
-	<authors since="1.0" updated="1.0">
+<language name="en" version="1.1" rel="1.1">
+	<authors since="1.0" updated="1.1">
 		<author>PEMapModder</author>
 	</authors>
 	<constants>
@@ -55,6 +55,19 @@
 				<pageEntry vars="COMMAND_NAME,COMMAND_DESCRIPTION">//${COMMAND_NAME}: ${COMMAND_DESCRIPTION}</pageEntry>
 			</help>
 		</command>
+		<info>
+			<zone since="1.1" updated="1.1">
+				<entry vars="ZONE_NAME,ZONE_TYPE">
+					${FORMAT_INFO}You just entered ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}
+				</entry>
+				<entryDenied vars="ZONE_NAME,ZONE_TYPE">
+					${FORMAT_ERROR}You cannot enter ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}
+				</entryDenied>
+				<left vars="ZONE_NAME,ZONE_TYPE">
+					${FORMAT_INFO}You just left ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}
+				</left>
+			</zone>
+		</info>
 		<phrases>
 		</phrases>
 	</values>

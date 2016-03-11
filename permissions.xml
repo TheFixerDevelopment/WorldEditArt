@@ -15,13 +15,23 @@
 
 <permissions>
 	<worldeditart description="Root node for WorldEditArt permissions" default="false">
-		<generic description="Root node for generic (not builder or admin only) permissions" default="op">
-			<commands description="Permission for all generic commands" default="op">
-				<command description="Allow using //help, required to use any other //*** commands" default="op"/>
-			</commands>
-		</generic>
 		<builder description="Root node for builder permissions" default="op">
+			<command description="Allows using //help"/>
 
 		</builder>
+		<admin description="Permissions beyond builders' rights" default="false">
+			<zones description="Allows administration of zones" default="false">
+				<bypass description="Permission to bypass zone restrictions" default="false">
+					<constr description="Permission to use WorldEditArt outside under-construction areas"
+					        default="false"/>
+				</bypass>
+				<create description="Allows creating zones" default="op">
+					<constr description="Allows creating under-construction zones" default="op"/>
+				</create>
+				<remove description="Allows removing zones" default="op">
+					<constr description="Allows removing under-construction zones" default="op"/>
+				</remove>
+			</zones>
+		</admin>
 	</worldeditart>
 </permissions>

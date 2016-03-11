@@ -13,11 +13,14 @@
  * @author LegendsOfMCPE
  */
 
-namespace WorldEditArt\InternalConstants;
+namespace WorldEditArt\Utils;
 
-class PermissionNames{
-	const COMMAND_MAIN = "worldeditart.builder.command";
-	const BYPASS_UNDER_CONSTRUCTION = "worldeditart.admin.zones.bypass.constr";
-	const CREATE_UNDER_CONSTRUCTION_ZONE = "worldeditart.admin.zones.create.constr";
-	const REMOVE_UNDER_CONSTRUCTION_ZONE = "worldeditart.admin.zones.remove.constr";
+class CloseSessionsTask extends WorldEditArtTask{
+	public function onRun($t){
+		foreach($this->getMain()->playerUsers as $k => $user){
+			if($user->getCloseTime() >= (int) ($this->getMain()->getConfig()->getNested("Session.Linger", 10) * 60)){
+				unset($this->getMain()->playerUsers[$k]);
+			}
+		}
+	}
 }

@@ -11,5 +11,10 @@
 #
 #	@author LegendsOfMCPE Team
 
-
+Session:
+  # The number of minutes that player sessions can linger for.
+  # If the same player joins again with the same (case-insensitive) name
+  #     and the server didnt' restart, the session will be recovered.
+  # Recovering a session keeps per-session stuff like selections reusable.
+  Linger: 10
 ...

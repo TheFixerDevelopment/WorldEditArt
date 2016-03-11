@@ -75,7 +75,7 @@ class WorldEditArtCommand extends Command implements PluginIdentifiableCommand{
 			$sender->sendMessage("Please run this command in-game, or use a command-controlled user.");
 			return false;
 		}
-		$user = $this->getMain()->getUser($sender);
+		$user = $this->getMain()->getPlayerUser($sender);
 		if(!($user instanceof WorldEditArtUser)){
 			$sender->sendMessage($this->getMain()->translate(Terms::COMMAND_ERROR_USER_LOADING));
 			return false;
