@@ -33,6 +33,9 @@ abstract class WorldEditArtUser implements Permissible{
 	/** @var Space[] $selections */
 	private $selections = [];
 
+	/** @var Position[] $anchors */
+	private $anchors = [];
+
 	/** @var int $closeTime */
 	private $closeTime = 0;
 
@@ -98,6 +101,19 @@ abstract class WorldEditArtUser implements Permissible{
 
 	public function setSelection(Space $space, string $name = "default"){
 		$this->selections[$name] = $space;
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return Position|null
+	 */
+	public function getAnchor(string $name = "default"){
+		return $this->anchors[$name] ?? null;
+	}
+
+	public function setAnchor(Position $position, string $name = "default"){
+		$this->anchors[$name] = $position;
 	}
 
 	public function canBuild(Position $pos) : bool{

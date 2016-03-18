@@ -18,7 +18,9 @@ namespace WorldEditArt\Objects\Space;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
+use WorldEditArt\Command\CommandParser;
 use WorldEditArt\Objects\BlockStream\BlockStream;
+use WorldEditArt\User\WorldEditArtUser;
 
 abstract class Space{
 	/** @var Level $level */
@@ -61,5 +63,19 @@ abstract class Space{
 		if(!$this->isValid()){
 			throw new \InvalidStateException("Attempt to call method on an invalid Space object");
 		}
+	}
+
+	public abstract function handlePosCommand();
+
+	public static function create(Level $level, CommandParser $args = null, WorldEditArtUser $owner = null){
+		$instance = new static($level);
+		if($args!==null){
+			foreach($args->getOpts() as $opt => $value){
+				$instance->handleCreationArg($opt, $value, $owner);
+			}
+		}
+	}
+
+	protected function handleCreationArg(string $name, string $value, WorldEditArtUser $owner = null){
 	}
 }

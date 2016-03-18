@@ -27,6 +27,7 @@ use pocketmine\math\Vector3;
 use WorldEditArt\Objects\BlockStream\BatchBlockStream;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
+use WorldEditArt\User\WorldEditArtUser;
 
 class CuboidSpace extends Space{
 	/** @var Vector3|null $pos1 */
@@ -120,5 +121,19 @@ class CuboidSpace extends Space{
 
 	public function isValid() : bool{
 		return $this->pos1 !== null and $this->pos2 !== null;
+	}
+
+	protected function handleCreationArg(WorldEditArtUser $owner, string $name, string $value){
+		if($name === "1"){
+			$posField = "pos1";
+		}elseif($name === "2"){
+			$posField = "pos2";
+		}
+		if(isset($posField)){
+			$explosion = explode(",", $value);
+			if(count($explosion) === 3){
+				$this->$posField = new Vector3(...array_map("intval", $explosion));
+			}
+		}
 	}
 }

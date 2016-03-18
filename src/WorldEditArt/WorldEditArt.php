@@ -16,6 +16,7 @@
 namespace WorldEditArt;
 
 use pocketmine\level\Level;
+use pocketmine\level\Location;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Player;
@@ -31,6 +32,9 @@ use WorldEditArt\User\WorldEditArtUser;
 use WorldEditArt\Utils\Fridge;
 
 class WorldEditArt extends PluginBase{
+	const MIN_Y = 0;
+	const MAX_Y = 127;
+
 	private static $PLUGIN_NAME = "WorldEditArt";
 
 	/** @var LanguageManager $langMgr */
@@ -166,6 +170,63 @@ class WorldEditArt extends PluginBase{
 			}elseif(!$fromInside and $toInside){
 				$entered[$zone->getName()] = $zone->getType();
 			}
+		}
+	}
+
+	public static function rotateClockwise(int $side){
+		switch($side){
+			case Vector3::SIDE_NORTH:
+				return Vector3::SIDE_EAST;
+			case Vector3::SIDE_SOUTH:
+				return Vector3::SIDE_WEST;
+			case Vector3::SIDE_WEST:
+				return Vector3::SIDE_NORTH;
+			case Vector3::SIDE_EAST:
+				return Vector3::SIDE_SOUTH;
+			default:
+				return $side;
+		}
+	}
+
+	public static function rotateAntiClockwise(int $side){
+		switch($side){
+			case Vector3::SIDE_SOUTH:
+				return Vector3::SIDE_EAST;
+			case Vector3::SIDE_NORTH:
+				return Vector3::SIDE_WEST;
+			case Vector3::SIDE_EAST:
+				return Vector3::SIDE_NORTH;
+			case Vector3::SIDE_WEST:
+				return Vector3::SIDE_SOUTH;
+			default:
+				return $side;
+		}
+	}
+
+	public static function getDirectionVector(Location $loc) : Vector3{
+		$y = -sin(deg2rad($loc->pitch));
+		$xz = cos(deg2rad($loc->pitch));
+		$x = -$xz * sin(deg2rad($loc->yaw));
+		$z = $xz * cos(deg2rad($loc->yaw));
+
+		return (new Vector3($x, $y, $z))->normalize();
+	}
+
+	public static function getDirection(Location $loc) : int{
+		$rotation = ($loc->yaw - 90) % 360;
+		if($rotation < 0){
+			$rotation += 360.0;
+		}
+		if((0 <= $rotation and $rotation < 45) or (315 <= $rotation and $rotation < 360)){
+			return 2; //North
+		}elseif(45 <= $rotation and $rotation < 135){
+			return 3; //East
+		}elseif(135 <= $rotation and $rotation < 225){
+			return 0; //South
+		}elseif(225 <= $rotation and $rotation < 315){
+			return 1; //West
+		}else{
+			return null;
 		}
 	}
 }

@@ -18,29 +18,41 @@
 		<author>PEMapModder</author>
 	</authors>
 	<constants>
-		<constant name="FORMAT_ERROR">§c</constant>
-		<constant name="FORMAT_WARNING">§e</constant>
-		<constant name="FORMAT_PROGRESS">§8</constant>
-		<constant name="FORMAT_SUCCESS">§a</constant>
-		<constant name="FORMAT_INFO">§f</constant>
-		<constant name="FORMAT_HIGHLIGHT">§b</constant>
-		<constant name="FORMAT_HIGHLIGHT_1">§b</constant>
-		<constant name="FORMAT_HIGHLIGHT_2">§9</constant>
-		<constant name="FORMAT_HIGHLIGHT_3">§5</constant>
-		<constant name="FORMAT_HIGHLIGHT_4">§d</constant>
+		<constant name="${FORMAT_ERROR}">§c</constant>
+		<constant name="${FORMAT_WARNING}">§e</constant>
+		<constant name="${FORMAT_PROGRESS}">§8</constant>
+		<constant name="${FORMAT_SUCCESS}">§a</constant>
+		<constant name="${FORMAT_INFO}">§f</constant>
+		<constant name="${FORMAT_HIGHLIGHT}">§b</constant>
+		<constant name="${FORMAT_HIGHLIGHT_1}">§b</constant>
+		<constant name="${FORMAT_HIGHLIGHT_2}">§9</constant>
+		<constant name="${FORMAT_HIGHLIGHT_3}">§5</constant>
+		<constant name="${FORMAT_HIGHLIGHT_4}">§d</constant>
+		<!--
+			Please put **terms** that are controversial, difficult to translate or cannot be translated here like this:
+			Add a "constant" line below in this format:
+			<constant name="@{abbr}">put a possible translation here</constant>
+			Please replace `abbr` with the abbreviation of the term's English version.
+			The abbreviation should be IN_UPPER_CASE_LIKE_THIS.
+			When you use this term again below, you can just type @{abbr}
+		-->
+		<constant name="@{VERTEX}">vertex</constant>
 	</constants>
 	<values>
 		<command>
 			<error>
-				<notFound since="1.0" updated="1.0">${FORMAT_ERROR}Unknown subcommand. Use `//help` for more
-					information.
+				<notFound since="1.0" updated="1.0">
+					${FORMAT_ERROR}Unknown subcommand. Use `//help` for more information.
 				</notFound>
-				<userLoading since="1.0" updated="1.0">${FORMAT_PROGRESS}Please wait. You cannot use WorldEditArt when
-					your data are still
-					loading.
+				<userLoading since="1.0" updated="1.0">
+					${FORMAT_PROGRESS}Please wait. You cannot use WorldEditArt when your data are still loading.
 				</userLoading>
-				<noPerm since="1.0" updated="1.0">${FORMAT_WARNING}You don't have permission to use this command.
+				<noPerm since="1.0" updated="1.0">
+					${FORMAT_ERROR}You don't have permission to use this command.
 				</noPerm>
+				<outOfRange since="1.1" updated="1.1">
+					${FORMAT_ERROR}The selected position is beyond world height.
+				</outOfRange>
 			</error>
 			<help since="1.0" updated="1.0">
 				<description>Show this help message</description>
@@ -54,21 +66,47 @@
 				</pageHeader>
 				<pageEntry vars="COMMAND_NAME,COMMAND_DESCRIPTION">//${COMMAND_NAME}: ${COMMAND_DESCRIPTION}</pageEntry>
 			</help>
+			<pos since="1.1" updated="1.1">
+				<description>
+					<formula vars="TYPE,PROP">Selects a ${TYPE} selection's ${PROP}</formula>
+				</description>
+				<usage vars="NAME">/${NAME} [anchor name]</usage>
+			</pos>
 		</command>
 		<info>
 			<zone since="1.1" updated="1.1">
 				<entry vars="ZONE_NAME,ZONE_TYPE">
-					${FORMAT_INFO}You just entered ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}
+					${FORMAT_INFO}You just entered ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}.
 				</entry>
 				<entryDenied vars="ZONE_NAME,ZONE_TYPE">
-					${FORMAT_ERROR}You cannot enter ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}
+					${FORMAT_ERROR}You cannot enter ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}!
 				</entryDenied>
 				<left vars="ZONE_NAME,ZONE_TYPE">
-					${FORMAT_INFO}You just left ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}
+					${FORMAT_INFO}You just left ${FORMAT_HIGHLIGHT}${ZONE_TYPE} ${FORMAT_HIGHLIGHT_2}${ZONE_NAME}.
 				</left>
 			</zone>
 		</info>
 		<phrases>
+			<spaces since="1.1" updated="1.1">
+				<types>
+					<cuboid>cuboid</cuboid>
+					<cylinder>
+						<generic>cylinder</generic>
+						<right>right cylinder</right>
+						<oblique>oblique cylinder</oblique>
+						<distorted>distorted cylinder</distorted>
+					</cylinder>
+					<sphere>sphere</sphere>
+					<ellipsoid>ellipsoid</ellipsoid>
+				</types>
+				<properties>
+					<center>center</center>
+					<pos1>@{VERTEX} 1</pos1>
+					<pos2>@{VERTEX} 2</pos2>
+					<radius>radius</radius>
+					<height>height</height>
+				</properties>
+			</spaces>
 		</phrases>
 	</values>
 </language>

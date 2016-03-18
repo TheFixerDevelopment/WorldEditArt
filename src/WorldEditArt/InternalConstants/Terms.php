@@ -19,6 +19,7 @@ class Terms{
 	const COMMAND_ERROR_NOT_FOUND = "command.error.notFound";
 	const COMMAND_ERROR_USER_LOADING = "command.error.userLoading";
 	const COMMAND_ERROR_NO_PERM = "command.error.noPerm";
+	const COMMAND_ERROR_OUT_OF_RANGE = "command.error.outOfRange";
 
 	const COMMAND_HELP_DESCRIPTION = "command.help.description";
 	const COMMAND_HELP_USAGE = "command.help.usage";
@@ -26,4 +27,24 @@ class Terms{
 	const COMMAND_HELP_INDIVIDUAL = "command.help.header.individual";
 	const COMMAND_HELP_PAGE_HEADER = "command.help.pageHeader";
 	const COMMAND_HELP_PAGE_ENTRY = "command.help.pageEntry";
+
+	const COMMAND_POS_DESCRIPTION_FORMULA = "command.pos.description.formula";
+	const COMMAND_POS_USAGE = "command.pos.usage";
+
+	const INFO_ZONE_ENTRY = "info.zone.entry";
+	const INFO_ZONE_ENTRY_DENIED = "info.zone.entryDenied";
+	const INFO_ZONE_LEFT = "info.zone.left";
+
+	const PHRASE_SPACE_TYPE_CUBOID ="phrases.spaces.type.cuboid";
+	const PHRASE_SPACE_TYPE_CYLINDER_GENERIC ="phrases.spaces.type.cylinder.generic";
+	const PHRASE_SPACE_TYPE_CYLINDER_RIGHT ="phrases.spaces.type.cylinder.right";
+	const PHRASE_SPACE_TYPE_CYLINDER_OBLIQUE ="phrases.spaces.type.cylinder.oblique";
+	const PHRASE_SPACE_TYPE_CYLINDER_DISTORTED ="phrases.spaces.type.cylinder.distorted";
+	const PHRASE_SPACE_TYPE_SPHERE ="phrases.spaces.type.sphere";
+	const PHRASE_SPACE_TYPE_ELLIPSOID ="phrases.spaces.type.ellipsoid";
+	const PHRASE_SPACE_PROP_CENTER ="phrases.spaces.properties.center";
+	const PHRASE_SPACE_PROP_POS_1 ="phrases.spaces.properties.pos1";
+	const PHRASE_SPACE_PROP_POS_2 ="phrases.spaces.properties.pos2";
+	const PHRASE_SPACE_PROP_RADIUS ="phrases.spaces.properties.radius";
+	const PHRASE_SPACE_PROP_HEIGHT ="phrases.spaces.properties.height";
 }

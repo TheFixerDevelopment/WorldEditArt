@@ -19,6 +19,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
+use WorldEditArt\User\WorldEditArtUser;
 
 class SphereSpace extends Space{
 	/** @var Vector3 $center */
@@ -28,7 +29,7 @@ class SphereSpace extends Space{
 	/** @var float $radiusSquared */
 	private $radiusSquared;
 
-	public function __construct(Level $level, Vector3 $center, float $radius = -1.0){
+	public function __construct(Level $level, Vector3 $center = null, float $radius = -1.0){
 		parent::__construct($level);
 		$this->center = $center;
 		if($radius > 0){
@@ -81,6 +82,24 @@ class SphereSpace extends Space{
 	}
 
 	public function isValid() : bool{
-		return isset($this->radius);
+		return isset($this->center, $this->radius);
+	}
+
+	protected function handleCreationArg(string $name, string $value, WorldEditArtUser $owner = null){
+		switch($name){
+			case "c":
+			case "center":
+			case "centre":
+				$explosion = explode(",", $value);
+				if(count($explosion) === 3){
+					$this->center = new Vector3(...array_map("intval", $explosion));
+				}
+				break;
+			case "r":
+			case"rad":
+			case"radius":
+				$this->setRadius((float) $value);
+				break;
+		}
 	}
 }

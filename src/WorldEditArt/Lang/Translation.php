@@ -50,7 +50,7 @@ class Translation{
 	}
 
 	public function define(string $constant, string $value){
-		$this->value = str_replace("\${" . $constant . "}", $value, $this->value);
+		$this->value = str_replace($constant, $value, $this->value);
 	}
 
 	public function toString(array $vars = []) : string{

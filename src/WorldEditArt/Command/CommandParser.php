@@ -16,10 +16,15 @@
 namespace WorldEditArt\Command;
 
 class CommandParser{
+	/** @var string[] */
 	private $plain = [];
 	private $plainStarted = false;
+
+	/** @var bool[] */
 	private $switches = [];
+	/** @var string[] */
 	private $opts = [];
+
 	private $unterminated = false;
 
 	/**
@@ -95,8 +100,26 @@ class CommandParser{
 		return isset($this->switches[$name]);
 	}
 
+	/**
+	 * @return bool[]
+	 */
+	public function getSwitches() : array{
+		return $this->switches;
+	}
+
 	public function opt(string $name, $default = null){
 		return isset($this->opts[$name]) ? $this->opts[$name] : $default;
+	}
+
+	public function optOpt(string $name, $empty = null, $default = null){
+		return $this->opts[$name] ?? ($this->switches[$name] ? $empty : $default);
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getOpts() : array{
+		return $this->opts;
 	}
 
 	public function plain(string $offset, $default = null){

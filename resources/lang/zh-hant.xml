@@ -13,7 +13,7 @@
 	@author LegendsOfMCPE
 -->
 
-<language name="zh-tr" version="1.0" rel="1.0">
+<language name="zh-tr" version="1.1" rel="1.1">
 	<authors since="1.0" updated="1.0">
 		<author>PEMapModder</author>
 	</authors>
@@ -28,13 +28,25 @@
 		<constant name="${FORMAT_HIGHLIGHT_2}">§9</constant>
 		<constant name="${FORMAT_HIGHLIGHT_3}">§5</constant>
 		<constant name="${FORMAT_HIGHLIGHT_4}">§d</constant>
+		<!--
+			請把有可能具爭議性、難以翻譯或未能翻譯的 **詞語** ，在下面增加一行，用以下方式建立恆量 (constant)︰
+			<constant name="@{abbr}">把你認為最適合的翻譯輸入於此處</constant>
+			在 abbr 處填上 UPPER_CASE_LIKE_THIS 的英文簡寫，並在之後以 @{abbr} 取代直接輸入該詞語
+		-->
+		<constant name="@{CMD}">指令</constant>
+		<constant name="@{SUBCMD}">次指令</constant>
+		<constant name="@{SPACE}">區域</constant>
+		<constant name="@{SEL}">區域選取</constant>
+		<constant name="@{ANCHOR}">書簽</constant>
+		<constant name="@{VERTEX}">頂點</constant>
 	</constants>
 	<values>
 		<command>
 			<error>
-				<notFound since="1.0" updated="1.0">你輸入了未知的次指令！輸入 `//help` 以獲取更多資訊。</notFound>
+				<notFound since="1.0" updated="1.0">你輸入了未知的${SUBCMD}！輸入 `//help` 以獲取更多資訊。</notFound>
 				<userLoading since="1.0" updated="1.0">載入你的使用者資料中，請稍等。</userLoading>
-				<noPerm since="1.0" updated="1.0">你沒有權限使用此指令！</noPerm>
+				<noPerm since="1.0" updated="1.0">你沒有權限使用此${SUBCMD}！</noPerm>
+				<outOfRange since="1.1" updated="1.1">你所選擇的位置在世界以外！</outOfRange>
 			</error>
 			<help since="1.0" updated="1.0">
 				<description>顯示這個協助訊息</description>
@@ -43,12 +55,54 @@
 					//${COMMAND_NAME}:\n說明︰${COMMAND_DESCRIPTION}\n用法︰${COMMAND_USAGE}\n簡寫︰${COMMAND_ALIASES}
 				</individual>
 				<pageHeader vars="PAGE_NUMBER,MAX_PAGES">
-					WorldEditArt 說明 -- 第${PAGE_NUMBER}頁，共${MAX_PAGES}頁
+					WorldEditArt 說明  第${PAGE_NUMBER}頁，共${MAX_PAGES}頁
 				</pageHeader>
 				<pageEntry vars="COMMAND_NAME,COMMAND_DESCRIPTION">//${COMMAND_NAME}︰${COMMAND_DESCRIPTION}</pageEntry>
 			</help>
+			<pos since="1.1" updated="1.1">
+				<description>
+					<formula vars="TYPE,PROP">設定一個${TYPE}@{SELECTION}的${PROP}</formula>
+				</description>
+				<usage vars="NAME">//${NAME} [@{ANCHOR}名稱]</usage>
+			</pos>
 		</command>
+		<info>
+			<zone since="1.1" updated="1.1">
+				<entry vars="ZONE_NAME,ZONE_TYPE">
+					${FORMAT_INFO}你剛剛進入了${FORMAT_HIGHLIGHT}${ZONE_TYPE}
+					「${FORMAT_HIGHLIGHT_2}${ZONE_NAME}${FORMAT_INFO}」。
+				</entry>
+				<entryDenied vars="ZONE_NAME,ZONE_TYPE">
+					${FORMAT_ERROR}你不能進入${FORMAT_HIGHLIGHT}${ZONE_TYPE}
+					${FORMAT_ERROR}「${FORMAT_HIGHLIGHT_2}${ZONE_NAME}${FORMAT_INFO}」！
+				</entryDenied>
+				<left vars="ZONE_NAME,ZONE_TYPE">
+					${FORMAT_INFO}你剛剛離開了${FORMAT_HIGHLIGHT}${ZONE_TYPE}
+					${FORMAT_INFO}「${FORMAT_HIGHLIGHT_2}${ZONE_NAME}${FORMAT_INFO}」。
+				</left>
+			</zone>
+		</info>
 		<phrases>
+			<spaces since="1.1" updated="1.1">
+				<types>
+					<cuboid>長方體</cuboid>
+					<cylinder>
+						<generic>圓柱體</generic>
+						<right>直立圓柱體</right>
+						<oblique>傾斜圓柱體</oblique>
+						<distorted>扭曲圓柱體</distorted>
+					</cylinder>
+					<sphere>球體</sphere>
+					<ellipsoid>橢球體</ellipsoid>
+				</types>
+				<properties>
+					<center>中心點</center>
+					<pos1>@{VERTEX} 1</pos1>
+					<pos2>@{VERTEX} 2</pos2>
+					<radius>半徑</radius>
+					<height>高</height>
+				</properties>
+			</spaces>
 		</phrases>
 	</values>
 </language>

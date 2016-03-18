@@ -19,6 +19,7 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
+use WorldEditArt\User\WorldEditArtUser;
 
 class EllipsoidSpace extends Space{
 	/** @var Vector3 $center */
@@ -70,5 +71,34 @@ class EllipsoidSpace extends Space{
 
 	public function getZRadius() : float{
 		return $this->zRadius;
+	}
+
+	protected function handleCreationArg(string $name, string $value, WorldEditArtUser $owner){
+		switch($name){
+			case "xr":
+			case "xrad":
+			case "xradius":
+			case "x-rad":
+			case "x-radius":
+				$rad = "xRadius";
+				break;
+			case "yr":
+			case "yrad":
+			case "yradius":
+			case "y-rad":
+			case "y-radius":
+				$rad = "yRadius";
+				break;
+			case "zr":
+			case "zrad":
+			case "zradius":
+			case "z-rad":
+			case "z-radius":
+				$rad = "zRadius";
+				break;
+		}
+		if(isset($rad)){
+			$this->$rad = (float) $value;
+		}
 	}
 }
