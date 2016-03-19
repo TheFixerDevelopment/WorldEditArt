@@ -324,10 +324,26 @@ Library.
 					It is also possible to select regions in spherical shape.
 				</div>
 				<div class="tree" data-name="Ellipsoids" data-anchor="sel-ellip">
-					An ellipse in WorldEditArt is not just an arbitrary region with curved surface. It is a sphere, but
-					stretched or compressed along a certain axis (horizontally or vertically).<br>
-					The syntax for selecting an ellipsoid is
-					<code>//ell &lt;radius&gt; &lt;stretch/compress direction&gt; &lt;special radius&gt;</code>
+					<p>
+						An ellipsoid is a stretched/compressed/distorted sphere. This means, the sphere is no longer of
+						regular radius, but has maximum/minimum radius at the X, Y and Z directions.
+					</p>
+					<p>
+						This image shows an ellipsoid:<br>
+						<img src="http://www.technologyuk.net/mathematics/geometry/images/geometry_0203.gif"><br>
+						In the image, <code>a</code> and <code>b</code> are horizontal, so they are the X and Z radii
+						respectively. <code>c</code> is vertical, so it is the Y radius.
+					</p>
+					<p>Syntax to create an ellipsoid selection:</p>
+					<pre>//ell &lt;x radius&gt; &lt;y radius&gt; &lt;z radius&gt;</pre>
+				</div>
+				<div class="tree" data-name="Cylinders">
+					<div class="tree" data-name="Right Cylinders" data-anchor="sel-right-cyl">
+						<p>
+							A right cylinder is a cylinder that either stands vertically or lies horizontally.<br>
+							A right cylinder is defined by its direction, radius and height.
+						</p>
+					</div>
 				</div>
 			</div>
 			<div class="tree" data-name="Wands" data-anchor="wands">TODO</div>

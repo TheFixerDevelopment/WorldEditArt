@@ -1,6 +1,7 @@
 html{
 	background: #FFFFFF url("plugin_icon_fadeout.jpg") center fixed;
 }
+/*noinspection CssUnusedSymbol*/
 #body{
 	font-family:      Helvetica, arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 	width:            1000px;
@@ -11,26 +12,31 @@ html{
 	padding:          10px;
 	border-radius:    10px;
 }
+/*noinspection CssUnusedSymbol*/
 .heading{
 	font-weight:   bold;
 	border-radius: 5px;
 }
+/*noinspection CssUnusedSymbol*/
 .spoiler{
 	border:        groove;
 	border-radius: 10px;
 	padding:       5px;
 }
+/*noinspection CssUnusedSymbol*/
 .note{
 	font-style:   italic;
 	border-left:  5px solid #C0C0C0;
 	padding-left: 5px;
 }
+/*noinspection CssUnusedSymbol*/
 p, .note{
 	line-height: 160%;
 }
 p br{
 	margin: 30px;
 }
+/*noinspection CssUnusedSymbol*/
 #index{
 	border:        ridge;
 	border-radius: 5px;
@@ -44,25 +50,32 @@ code, pre{
 	padding:          1px;
 	/* This font family set is what GitHub uses, and I like it :D */
 }
+/*noinspection CssUnusedSymbol*/
 .u{
 	text-decoration: underline;
 }
+/*noinspection CssUnusedSymbol*/
 .hint{
 	border-bottom: 1px dotted;
 	cursor:        help;
 }
+/*noinspection CssUnusedSymbol*/
 li.depth-1{
 	list-style-type: decimal;
 }
+/*noinspection CssUnusedSymbol*/
 li.depth-2{
 	list-style-type: lower-alpha;
 }
+/*noinspection CssUnusedSymbol*/
 li.depth-3{
 	list-style-type: lower-roman;
 }
+/*noinspection CssUnusedSymbol*/
 li.depth-4{
 	list-style-type: upper-alpha;
 }
+/*noinspection CssUnusedSymbol*/
 li.depth-5{
 	list-style-type: upper-roman;
 }
