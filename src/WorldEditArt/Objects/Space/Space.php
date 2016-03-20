@@ -69,7 +69,7 @@ abstract class Space{
 
 	public static function create(Level $level, CommandParser $args = null, WorldEditArtUser $owner = null){
 		$instance = new static($level);
-		if($args!==null){
+		if($args !== null){
 			foreach($args->getOpts() as $opt => $value){
 				$instance->handleCreationArg($opt, $value, $owner);
 			}

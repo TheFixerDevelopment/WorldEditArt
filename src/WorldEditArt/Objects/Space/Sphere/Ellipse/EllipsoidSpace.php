@@ -101,4 +101,8 @@ class EllipsoidSpace extends Space{
 			$this->$rad = (float) $value;
 		}
 	}
+
+	public function handlePosCommand(){
+		// TODO: Implement handlePosCommand() method.
+	}
 }

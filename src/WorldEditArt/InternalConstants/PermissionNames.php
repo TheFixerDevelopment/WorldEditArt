@@ -17,6 +17,7 @@ namespace WorldEditArt\InternalConstants;
 
 class PermissionNames{
 	const COMMAND_MAIN = "worldeditart.builder.command";
+	const COMMAND_DESEL = "worldeditart.builder.desel";
 	const BYPASS_UNDER_CONSTRUCTION = "worldeditart.admin.zones.bypass.constr";
 	const CREATE_UNDER_CONSTRUCTION_ZONE = "worldeditart.admin.zones.create.constr";
 	const REMOVE_UNDER_CONSTRUCTION_ZONE = "worldeditart.admin.zones.remove.constr";

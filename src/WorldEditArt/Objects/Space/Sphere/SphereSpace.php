@@ -102,4 +102,8 @@ class SphereSpace extends Space{
 				break;
 		}
 	}
+
+	public function handlePosCommand(){
+		// TODO: Implement handlePosCommand() method.
+	}
 }

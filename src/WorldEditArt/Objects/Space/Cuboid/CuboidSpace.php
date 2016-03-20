@@ -136,4 +136,8 @@ class CuboidSpace extends Space{
 			}
 		}
 	}
+
+	public function handlePosCommand(){
+		// TODO: Implement handlePosCommand() method.
+	}
 }

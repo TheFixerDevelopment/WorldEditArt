@@ -31,20 +31,25 @@ class Terms{
 	const COMMAND_POS_DESCRIPTION_FORMULA = "command.pos.description.formula";
 	const COMMAND_POS_USAGE = "command.pos.usage";
 
+	const COMMAND_DESEL_DESCRIPTION = "command.desel.description";
+	const COMMAND_DESEL_USAGE = "command.desel.usage";
+	const COMMAND_DESEL_SUCCESS = "command.desel.success";
+	const COMMAND_DESEL_FAILURE = "command.desel.failure";
+
 	const INFO_ZONE_ENTRY = "info.zone.entry";
 	const INFO_ZONE_ENTRY_DENIED = "info.zone.entryDenied";
 	const INFO_ZONE_LEFT = "info.zone.left";
 
-	const PHRASE_SPACE_TYPE_CUBOID ="phrases.spaces.type.cuboid";
-	const PHRASE_SPACE_TYPE_CYLINDER_GENERIC ="phrases.spaces.type.cylinder.generic";
-	const PHRASE_SPACE_TYPE_CYLINDER_RIGHT ="phrases.spaces.type.cylinder.right";
-	const PHRASE_SPACE_TYPE_CYLINDER_OBLIQUE ="phrases.spaces.type.cylinder.oblique";
-	const PHRASE_SPACE_TYPE_CYLINDER_DISTORTED ="phrases.spaces.type.cylinder.distorted";
-	const PHRASE_SPACE_TYPE_SPHERE ="phrases.spaces.type.sphere";
-	const PHRASE_SPACE_TYPE_ELLIPSOID ="phrases.spaces.type.ellipsoid";
-	const PHRASE_SPACE_PROP_CENTER ="phrases.spaces.properties.center";
-	const PHRASE_SPACE_PROP_POS_1 ="phrases.spaces.properties.pos1";
-	const PHRASE_SPACE_PROP_POS_2 ="phrases.spaces.properties.pos2";
-	const PHRASE_SPACE_PROP_RADIUS ="phrases.spaces.properties.radius";
-	const PHRASE_SPACE_PROP_HEIGHT ="phrases.spaces.properties.height";
+	const PHRASE_SPACE_TYPE_CUBOID = "phrases.spaces.type.cuboid";
+	const PHRASE_SPACE_TYPE_CYLINDER_GENERIC = "phrases.spaces.type.cylinder.generic";
+	const PHRASE_SPACE_TYPE_CYLINDER_RIGHT = "phrases.spaces.type.cylinder.right";
+	const PHRASE_SPACE_TYPE_CYLINDER_OBLIQUE = "phrases.spaces.type.cylinder.oblique";
+	const PHRASE_SPACE_TYPE_CYLINDER_DISTORTED = "phrases.spaces.type.cylinder.distorted";
+	const PHRASE_SPACE_TYPE_SPHERE = "phrases.spaces.type.sphere";
+	const PHRASE_SPACE_TYPE_ELLIPSOID = "phrases.spaces.type.ellipsoid";
+	const PHRASE_SPACE_PROP_CENTER = "phrases.spaces.properties.center";
+	const PHRASE_SPACE_PROP_POS_1 = "phrases.spaces.properties.pos1";
+	const PHRASE_SPACE_PROP_POS_2 = "phrases.spaces.properties.pos2";
+	const PHRASE_SPACE_PROP_RADIUS = "phrases.spaces.properties.radius";
+	const PHRASE_SPACE_PROP_HEIGHT = "phrases.spaces.properties.height";
 }

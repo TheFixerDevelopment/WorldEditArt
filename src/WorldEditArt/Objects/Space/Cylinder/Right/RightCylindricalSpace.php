@@ -199,4 +199,8 @@ class RightCylindricalSpace extends Space{
 				break;
 		}
 	}
+
+	public function handlePosCommand(){
+		// TODO: Implement handlePosCommand() method.
+	}
 }

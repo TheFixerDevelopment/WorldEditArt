@@ -19,6 +19,7 @@ use pocketmine\level\Location;
 use pocketmine\level\Position;
 use pocketmine\permission\Permissible;
 use WorldEditArt\DataProvider\Model\UserData;
+use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\Objects\Space\Space;
 use WorldEditArt\WorldEditArt;
 
@@ -85,6 +86,10 @@ abstract class WorldEditArtUser implements Permissible{
 		return $this->isClosed() ? -1 : (time() - $this->closeTime);
 	}
 
+	public function getQueue() : CassetteQueue{
+		return $this->queue;
+	}
+
 	public function close(){
 		$this->save();
 		$this->closeTime = time();
@@ -99,7 +104,11 @@ abstract class WorldEditArtUser implements Permissible{
 		return $this->selections[$name] ?? null;
 	}
 
-	public function setSelection(Space $space, string $name = "default"){
+	public function setSelection(Space $space = null, string $name = "default"){
+		if($space === null){
+			unset($this->selections[$name]);
+			return;
+		}
 		$this->selections[$name] = $space;
 	}
 
@@ -117,6 +126,13 @@ abstract class WorldEditArtUser implements Permissible{
 	}
 
 	public function canBuild(Position $pos) : bool{
-		return true; // TODO under-construction zones
+		if(!$this->hasPermission(PermissionNames::BYPASS_UNDER_CONSTRUCTION)){
+			foreach($this->main->getDataProvider()->getZones() as $zone){
+				if($zone->isInside($pos)){
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

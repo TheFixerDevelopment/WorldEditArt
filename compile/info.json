@@ -1,16 +1,16 @@
 {
-	"name": "WorldEditArt",
-	"author": "LegendsOfMCPE",
-	"authors": [
-		"PEMapModder"
-	],
-	"main": "WorldEditArt\\WorldEditArt",
-	"api": [
-		"2.0.0"
-	],
-	"version": {
-		"major": 3,
-		"minor": 0
-	},
-	"nextBuild": 114
+    "name": "WorldEditArt",
+    "author": "LegendsOfMCPE",
+    "authors": [
+        "PEMapModder"
+    ],
+    "main": "WorldEditArt\\WorldEditArt",
+    "api": [
+        "2.0.0"
+    ],
+    "version": {
+        "major": 3,
+        "minor": 0
+    },
+    "nextBuild": 117
 }

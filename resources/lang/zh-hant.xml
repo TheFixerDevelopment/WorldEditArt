@@ -55,7 +55,7 @@
 					//${COMMAND_NAME}:\n說明︰${COMMAND_DESCRIPTION}\n用法︰${COMMAND_USAGE}\n簡寫︰${COMMAND_ALIASES}
 				</individual>
 				<pageHeader vars="PAGE_NUMBER,MAX_PAGES">
-					WorldEditArt 說明  第${PAGE_NUMBER}頁，共${MAX_PAGES}頁
+					WorldEditArt 說明 第${PAGE_NUMBER}頁，共${MAX_PAGES}頁
 				</pageHeader>
 				<pageEntry vars="COMMAND_NAME,COMMAND_DESCRIPTION">//${COMMAND_NAME}︰${COMMAND_DESCRIPTION}</pageEntry>
 			</help>

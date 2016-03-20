@@ -13,9 +13,9 @@
 	@author LegendsOfMCPE
 -->
 
-<language name="en" version="1.1" rel="1.1">
-	<authors since="1.0" updated="1.1">
-		<author>PEMapModder</author>
+<language name="en" version="1.2" rel="1.2">
+	<authors>
+		<author since="1.0" updated="1.2">PEMapModder</author>
 	</authors>
 	<constants>
 		<constant name="${FORMAT_ERROR}">§c</constant>
@@ -72,6 +72,12 @@
 				</description>
 				<usage vars="NAME">/${NAME} [anchor name]</usage>
 			</pos>
+			<desel since="1.2" updated="1.2">
+				<description>Deselect your selection</description>
+				<usage>//desel [selection name]</usage>
+				<success vars="NAME">Your selection ${NAME} has been deselected.</success>
+				<failure vars="NAME">You don't have a selection called ${NAME}.</failure>
+			</desel>
 		</command>
 		<info>
 			<zone since="1.1" updated="1.1">

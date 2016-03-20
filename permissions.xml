@@ -17,7 +17,7 @@
 	<worldeditart description="Root node for WorldEditArt permissions" default="false">
 		<builder description="Root node for builder permissions" default="op">
 			<command description="Allows using //help"/>
-
+			<desel description="Allows using //desel"/>
 		</builder>
 		<admin description="Permissions beyond builders' rights" default="false">
 			<zones description="Allows administration of zones" default="false">

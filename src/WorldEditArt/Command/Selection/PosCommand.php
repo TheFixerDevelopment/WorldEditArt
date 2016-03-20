@@ -123,6 +123,5 @@ class PosCommand extends BlockSubCommand{
 			$sel = $class::create($block->getLevel(), $args, $user);
 			$user->setSelection($sel, $selName);
 		}
-
 	}
 }
