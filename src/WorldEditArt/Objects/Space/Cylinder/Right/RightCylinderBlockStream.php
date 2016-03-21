@@ -19,7 +19,7 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 
-class SolidRightCylinderBlockStream implements BlockStream{
+class RightCylinderBlockStream implements BlockStream{
 	/** @var Level $level */
 	protected $level;
 	/** @var string $ax0 */
@@ -36,8 +36,10 @@ class SolidRightCylinderBlockStream implements BlockStream{
 	protected $circle = [];
 	/** @var int $circlePointer */
 	protected $circlePointer = 0;
+	/** @var bool $isHollow */
+	protected $isHollow = false;
 
-	public function __construct(RightCylindricalSpace $cyl){
+	public function __construct(RightCylindricalSpace $cyl, bool $isHollow = false){
 		$this->level = $cyl->getLevel();
 		$this->ax0 = $cyl->axis0();
 		$this->ax1 = $cyl->axis1();
@@ -45,19 +47,39 @@ class SolidRightCylinderBlockStream implements BlockStream{
 		$two = [$cyl->getCenter()->{$this->ax0}, $cyl->getCenter()->{$cyl->getHeight()}];
 		$this->v0 = (int) min($two);
 		$this->max0 = (int) ceil(max($two));
+		$this->isHollow = $isHollow;
 		$this->initCircle($cyl);
 	}
 
 	protected function initCircle(RightCylindricalSpace $cyl){
-		$base = new Vector3;
-		$radiusSquared = $cyl->getRadius() ** 2;
-		for($v1 = $cyl->{$this->ax1} - $cyl->getRadius(); $v1 <= $cyl->{$this->ax1} + 1; $v1++){
-			for($v2 = $cyl->{$this->ax2} - $cyl->getRadius(); $v2 <= $cyl->{$this->ax2} + 1; $v2++){
-				$vector = new Vector3;
-				$vector->{$this->ax1} = $v1;
-				$vector->{$this->ax2} = $v2;
-				if($vector->distanceSquared($base) <= $radiusSquared){
-					$this->circle[] = $vector;
+		$radius = $cyl->getRadius();
+		$radiusSquared = $radius ** 2;
+		$center = $cyl->getCenter();
+//		for($v1 = $cyl->{$this->ax1} - $cyl->getRadius(); $v1 <= $cyl->{$this->ax1} + 1; $v1++){
+//			for($v2 = $cyl->{$this->ax2} - $cyl->getRadius(); $v2 <= $cyl->{$this->ax2} + 1; $v2++){
+//				$vector = new Vector3;
+//				$vector->{$this->ax1} = $v1;
+//				$vector->{$this->ax2} = $v2;
+//				if($vector->distanceSquared($base) <= $radiusSquared){
+//					$this->circle[] = $vector;
+//				}
+//			}
+//		}
+		for($v1 = $center->{$this->ax1} - $radius; $v1 <= $center->{$this->ax1} + $radius; $v1++){
+			$dRoot = sqrt($radiusSquared - (($v1 - $center->{$this->ax1}) ** 2));
+			$start = $center->{$this->ax2} - $dRoot;
+			$end = $center->{$this->ax2} + $dRoot;
+			$vector = new Vector3;
+			$vector->{$this->ax1} = $v1;
+			if($this->isHollow){
+				$vector->{$this->ax2} = $start;
+				$this->circle[] = clone $vector;
+				$vector->{$this->ax2} = $end;
+				$this->circle[] = $vector;
+			}else{
+				for($v2 = $start; $v2 <= $end; $v2++){
+					$vector->{$this->ax2} = $v2;
+					$this->circle[] = clone $vector;
 				}
 			}
 		}

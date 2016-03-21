@@ -17,7 +17,7 @@ namespace WorldEditArt\Objects\Space\Cylinder\Right;
 
 use pocketmine\math\Vector3;
 
-class HollowRightCylinderBlockStream extends SolidRightCylinderBlockStream{
+class HollowRightCylinderBlockStream extends RightCylinderBlockStream{
 	/** @var int $padding */
 	private $padding;
 	/** @var int $margin */

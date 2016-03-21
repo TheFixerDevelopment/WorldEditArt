@@ -23,6 +23,7 @@ use WorldEditArt\User\WorldEditArtUser;
 use WorldEditArt\WorldEditArt;
 
 class RightCylindricalSpace extends Space{
+	const DIRECTION_UNCHANGED = -1;
 	const DIRECTION_X = 0;
 	const DIRECTION_Y = 1;
 	const DIRECTION_Z = 2;
@@ -32,35 +33,69 @@ class RightCylindricalSpace extends Space{
 	/** @var Vector3 $center */
 	private $center;
 	/** @var float $radius */
-	private $radius;
+	protected $radius;
 	/** @var float $height */
-	private $height;
+	protected $height;
+	/** @var int $tilt1 */
+	protected $tilt1;
+	/** @var int $tilt2 */
+	protected $tilt2;
 
-	public function __construct(Level $level, int $direction = self::DIRECTION_Y, Vector3 $center = null, float $radius = -1.0, float $height = -1.0){
+	public function __construct(Level $level, int $direction = self::DIRECTION_Y, Vector3 $center = null, Vector3 $top = null, float $radius = -1.0){
 		parent::__construct($level);
 		$this->direction = $direction;
 		$this->center = $center === null ? null : $center->floor();
 		if($radius !== -1.0){
 			$this->radius = $radius;
 		}
-		if($height !== -1.0){
-			$this->height = $height;
+		if($center !== null and $top !== null){
+			$a0 = $this->axis0();
+			$a1 = $this->axis1();
+			$a2 = $this->axis2();
+			$this->height = $top->{$a0} - $center->{$a0};
+			$this->tilt1 = $top->{$a1} - $center->{$a1};
+			$this->tilt2 = $top->{$a2} - $center->{$a2};
 		}
 	}
 
 	public function getSolidBlockStream() : BlockStream{
-		return new SolidRightCylinderBlockStream($this);
+		return new RightCylinderBlockStream($this);
 	}
 
 	public function getHollowBlockStream(int $padding = 1, int $margin = 0) : BlockStream{
+		if($padding === 1 and $margin === 0){
+			return new RightCylinderBlockStream($this, true);
+		}
 		return new HollowRightCylinderBlockStream($this, $padding, $margin);
+//		$streams = [];
+//		for($radius = $this->radius - $padding; $radius <= $this->radius + $margin; $radius++){
+//			$streams[] = new RightCylinderBlockStream($this, true);
+//		}
+//		return new BatchBlockStream($streams);
 	}
 
 	public function getApproxBlockCount() : int{
-		// TODO: Implement getApproxBlockCount() method.
+		return ($this->radius ** 2) * M_PI * $this->height;
 	}
 
 	protected function isInsideImpl(Vector3 $pos) : bool{
+		$delta = $pos->subtract($this->center);
+		$a0 = $this->axis0();
+		$a1 = $this->axis1();
+		$a2 = $this->axis2();
+
+		// check axis 0
+		if($delta->{$a0} < 0 or $delta->{$a0} > $this->height){
+			return false;
+		}
+
+		// normalize axis 1 and axis 2
+		$prop = $delta->{$a0} / $this->height;
+		$d1 = $delta->{$a1} - $this->tilt1 * $prop;
+		$d2 = $delta->{$a2} - $this->tilt2 * $prop;
+
+		// check axis 0 with Pyth. thm
+		return sqrt(($d1 ** 2) + ($d2 ** 2)) <= $this->radius;
 	}
 
 	public function getRadius() : float{
@@ -68,8 +103,23 @@ class RightCylindricalSpace extends Space{
 		return $this->radius;
 	}
 
+	public function setRadius(float $radius){
+		$this->radius = $radius;
+	}
+
 	public function getCenter() : Vector3{
-		return $this->center;
+		return clone $this->center;
+	}
+
+	public function setCenter(Vector3 $center, int $direction = self::DIRECTION_UNCHANGED, bool $moveTop = true){
+		$top = $this->getTop();
+		$this->center = new Vector3($center->x, $center->y, $center->z);
+		if($direction !== self::DIRECTION_UNCHANGED){
+			$this->direction = $direction;
+		}
+		if(!$moveTop){
+			$this->setTop($top);
+		}
 	}
 
 	public function getDirection() : int{
@@ -81,8 +131,35 @@ class RightCylindricalSpace extends Space{
 		return $this->height;
 	}
 
+	public function setHeight(float $height, bool $keepTilt = true){
+		if($keepTilt){
+			$ratio = $height / $this->height;
+			$this->tilt1 *= $ratio;
+			$this->tilt2 *= $ratio;
+		}
+		$this->height = $height;
+	}
+
+	public function getTop() : Vector3{
+		$this->throwValid();
+		$top = $this->getCenter();
+		$top->{$this->axis0()} += $this->height;
+		$top->{$this->axis1()} += $this->tilt1;
+		$top->{$this->axis2()} += $this->tilt2;
+		return $top;
+	}
+
+	public function setTop(Vector3 $top){
+		$a0 = $this->axis0();
+		$a1 = $this->axis1();
+		$a2 = $this->axis2();
+		$this->height = $top->{$a0} - $this->center->{$a0};
+		$this->tilt1 = $top->{$a1} - $this->center->{$a1};
+		$this->tilt2 = $top->{$a2} - $this->center->{$a2};
+	}
+
 	public function isValid() : bool{
-		return isset($this->center, $this->radius, $this->height);
+		return isset($this->center, $this->radius, $this->height, $this->tilt1, $this->tilt2);
 	}
 
 	public function axis0() : string{
