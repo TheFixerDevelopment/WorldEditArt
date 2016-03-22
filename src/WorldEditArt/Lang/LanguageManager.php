@@ -52,8 +52,7 @@ class LanguageManager{
 			$this->parse($this->main->getResourceContents("lang/en.xml"), "en");
 		}
 		$this->parse($this->main->getResourceContents("lang/en.xml"), "/backup");
-
-		var_dump(array_keys($this->langs));
+//		var_dump(array_keys($this->langs));
 	}
 
 	private function parse(string $langFile, $forceName = null){
