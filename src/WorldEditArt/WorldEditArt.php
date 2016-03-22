@@ -57,7 +57,7 @@ class WorldEditArt extends PluginBase{
 
 	public function onLoad(){
 		self::$PLUGIN_NAME = $this->getName();
-		assert($this->getServer()->getName() === "PocketMine-MP", "Haters Gonna Hate");
+		assert(in_array($this->getServer()->getName(), ["PocketMine-MP", "PocketMine-Soft"]), "Haters Gonna Hate");
 	}
 
 	public function onEnable(){
