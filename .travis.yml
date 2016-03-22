@@ -2,7 +2,8 @@ language: php
 php: ["7.0"]
 sudo: false
 install:
-- echo | pecl install yaml
+- echo | pecl install yaml-beta
+- echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - echo "extension=yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - cd ..
 - mkdir pm
