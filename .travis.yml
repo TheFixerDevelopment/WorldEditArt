@@ -15,7 +15,6 @@ before_script:
 - cd $TRAVIS_BUILD_DIR
 - php compile.php
 - cp compile/WorldEditArt_Dev.phar ../pm/plugins
-- wget -O ../pm/plugins/ServerKiller.php https://gist.githubusercontent.com/PEMapModder/48098c1348f3c38b97e9/raw/50994e0318c0083b3cd1ba565be041c30052b1d3/ServerKiller.php
 
 script:
 - cd $TRAVIS_BUILD_DIR
