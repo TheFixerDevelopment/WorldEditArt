@@ -16,7 +16,7 @@ install:
 
 before_script:
 - cd $TRAVIS_BUILD_DIR
-- ../pm/bin/php7/bin/php compile.php
+- php compile.php
 - cp compile/WorldEditArt_Dev.phar ../pm/plugins
 
 script:
