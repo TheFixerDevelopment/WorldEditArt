@@ -36,6 +36,7 @@ class WorldEditArt extends PluginBase{
 	const MAX_Y = 127;
 
 	private static $PLUGIN_NAME = "WorldEditArt";
+	private static $debug = false;
 
 	/** @var LanguageManager $langMgr */
 	private $langMgr;
@@ -55,9 +56,14 @@ class WorldEditArt extends PluginBase{
 		return self::$PLUGIN_NAME;
 	}
 
+	public static function isDebug() : bool{
+		return self::$debug;
+	}
+
 	public function onLoad(){
 		self::$PLUGIN_NAME = $this->getName();
 		assert(in_array($this->getServer()->getName(), ["PocketMine-MP", "PocketMine-Soft"]), "Haters Gonna Hate");
+		self::$debug = $this->getServer()->getConfigBoolean("worldeditart.debug");
 	}
 
 	public function onEnable(){

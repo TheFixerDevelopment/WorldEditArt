@@ -18,4 +18,4 @@ before_script:
 
 script:
 - cd $TRAVIS_BUILD_DIR && chmod +x lint.sh && ./lint.sh
-- cd ../pm && ((echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline)
+- cd ../pm && ((echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug=on)
