@@ -1,4 +1,4 @@
-WorldEditArt ![WorldEditArt](plugin_icon.png)
+WorldEditArt ![WorldEditArt](plugin_icon.png) [![Build Status](https://travis-ci.org/LegendOfMCPE/WorldEditArt.svg?branch=master)](https://travis-ci.org/LegendOfMCPE/WorldEditArt)
 ===
 
 Please see [the webpage on gh-pages](//pemapmodder.github.io/WorldEditArt/guide/) for user guides.
