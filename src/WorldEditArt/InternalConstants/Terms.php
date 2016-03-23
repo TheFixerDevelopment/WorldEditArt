@@ -19,7 +19,9 @@ class Terms{
 	const COMMAND_ERROR_NOT_FOUND = "command.error.notFound";
 	const COMMAND_ERROR_USER_LOADING = "command.error.userLoading";
 	const COMMAND_ERROR_NO_PERM = "command.error.noPerm";
+	const COMMAND_ERROR_NO_SEL = "command.error.noSel";
 	const COMMAND_ERROR_OUT_OF_RANGE = "command.error.outOfRange";
+	const COMMAND_ERROR_UNKNOWN_BLOCK = "command.error.unknownBlock";
 
 	const COMMAND_HELP_DESCRIPTION = "command.help.description";
 	const COMMAND_HELP_USAGE = "command.help.usage";
@@ -35,6 +37,11 @@ class Terms{
 	const COMMAND_DESEL_USAGE = "command.desel.usage";
 	const COMMAND_DESEL_SUCCESS = "command.desel.success";
 	const COMMAND_DESEL_FAILURE = "command.desel.failure";
+
+	const COMMAND_SET_DESCRIPTION = "command.set.description";
+	const COMMAND_SET_USAGE = "command.set.usage";
+	const COMMAND_SET_DETAILED_USAGE = "command.set.detailedUsage";
+	const COMMAND_SET_PENDING = "command.set.pending";
 
 	const INFO_ZONE_ENTRY = "info.zone.entry";
 	const INFO_ZONE_ENTRY_DENIED = "info.zone.entryDenied";

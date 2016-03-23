@@ -20,9 +20,10 @@
 	<constants>
 		<constant name="${FORMAT_ERROR}">§c</constant>
 		<constant name="${FORMAT_WARNING}">§e</constant>
-		<constant name="${FORMAT_PROGRESS}">§8</constant>
+		<constant name="${FORMAT_PROGRESS}">§7</constant>
 		<constant name="${FORMAT_SUCCESS}">§a</constant>
 		<constant name="${FORMAT_INFO}">§f</constant>
+		<constant name="${FORMAT_VERBOSE}">§8</constant>
 		<constant name="${FORMAT_HIGHLIGHT}">§b</constant>
 		<constant name="${FORMAT_HIGHLIGHT_1}">§b</constant>
 		<constant name="${FORMAT_HIGHLIGHT_2}">§9</constant>

@@ -18,6 +18,7 @@
 		<builder description="Root node for builder permissions" default="op">
 			<command description="Allows using //help"/>
 			<desel description="Allows using //desel"/>
+			<set description="Allows using //set"/>
 		</builder>
 		<admin description="Permissions beyond builders' rights" default="false">
 			<zones description="Allows administration of zones" default="false">

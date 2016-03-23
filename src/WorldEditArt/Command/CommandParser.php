@@ -83,9 +83,9 @@ class CommandParser{
 				$this->opts[$currentOpt] = $arg;
 				$currentOpt = null;
 			}elseif($arg{0} === "."){
-				$this->switches[$arg] = true;
+				$this->switches[substr($arg, 1)] = true;
 			}elseif($arg{0} === ","){
-				$currentOpt = $arg;
+				$currentOpt = substr($arg, 1);
 			}else{
 				$this->plain[] = $arg;
 			}
