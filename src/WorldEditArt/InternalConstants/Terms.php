@@ -36,7 +36,7 @@ class Terms{
 	const COMMAND_DESEL_DESCRIPTION = "command.desel.description";
 	const COMMAND_DESEL_USAGE = "command.desel.usage";
 	const COMMAND_DESEL_SUCCESS = "command.desel.success";
-	const COMMAND_DESEL_FAILURE = "command.desel.failure";
+//	const COMMAND_DESEL_FAILURE = "command.desel.failure";
 
 	const COMMAND_SET_DESCRIPTION = "command.set.description";
 	const COMMAND_SET_USAGE = "command.set.usage";

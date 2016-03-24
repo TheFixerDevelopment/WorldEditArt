@@ -15,7 +15,6 @@
 
 namespace WorldEditArt\Command;
 
-use pocketmine\item\Item;
 use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\Cassette;
@@ -60,11 +59,16 @@ class SetSubCommand extends SubCommand{
 				list($weight, $type) = explode(";", $type, 2);
 				$weight = (float) $weight;
 			}
-			$item = Item::fromString($type);
-			if(($block = $item->getBlock()) === Item::AIR and strtoupper($type) !== "AIR"){
+			$damage = 0;
+			if(strpos($type, ":") !== false){
+				list($type, $damage) = explode(":", $type, 2);
+				$damage = (int) $damage;
+			}
+			$id = $this->getMain()->getBlockIdByName($type);
+			if($id === null){
 				return $user->translate(Terms::COMMAND_ERROR_UNKNOWN_BLOCK, ["TYPE" => $type]);
 			}
-			$blockType = new WeightedBlockType($weight, $block->getId(), $block->getDamage());
+			$blockType = new WeightedBlockType($weight, $id, $damage);
 			$list->add($blockType);
 		}
 		$changer = new WeightedListBlockChanger($list);

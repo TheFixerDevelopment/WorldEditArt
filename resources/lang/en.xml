@@ -83,28 +83,28 @@
 				<description>Deselect your selection</description>
 				<usage>//desel [selection name]</usage>
 				<success vars="NAME">Your selection ${NAME} has been deselected.</success>
-				<failure vars="NAME">You don't have a selection called ${NAME}.</failure>
 			</desel>
 			<set since="1.3" updated="1.3">
 				<description>Change all blocks in your selection</description>
 				<usage>//set [,n &lt;selection name&gt;] [,s &lt;seed&gt;] [.h [,p &lt;padding&gt;] [,m &lt;margin&gt;]]
 					&lt;block types&gt;</usage>
 				<detailedUsage>
-					//set [,n &lt;selection name&gt;] [,s &lt;seed&gt;] &lt;block types&gt;\n
+					//set [,n &lt;selection name&gt;] [,s &lt;seed&gt;] [.h [,p &lt;padding&gt;] [,m &lt;margin&gt;]]
+					&lt;block types&gt;\n
 					If ,n is not specified, the selection name will be ${FORMAT_HIGHLIGHT}default${FORMAT_INFO}.\n
 					,s is the seed for random blocks. If you want to generate the same pattern every time, specify the
 					same seed.\n
 					If ,s is not specified, the seed will be the current time.\n
-					Adding the ${FORMAT_HIGHLIGHT}.h${FORMAT_INFO} tag will only modify the surface blocks of the
+					Adding the ${FORMAT_HIGHLIGHT}.h${FORMAT_INFO} flag will only modify the surface blocks of the
 					selection.\n
 					If you enabled .h, you can also specify ,p (padding) and ,m (margin) to define the inner and outer
-					thickness (default 1 and 0) of the surface.
+					thickness (default 1 and 0) of the surface respectively.
 					For &lt;block types&gt;, separate blocks with spaces.\n
 					For each block, you can put the block name or the block ID.\n
 					If the block name contains spaces, replace them with an underscore ${FORMAT_HIGHLIGHT}_\n
 					The default block damage is 0. To specify block damage, add a colon then the damage value.\n
-					To specify the chance weight, add the chance, then a semicolon ${FORMAT_HIGHLIGHT};
-					${FORMAT_HIGHLIGHT}:${FORMAT_INFO}, then the block damage.\n
+					To specify the chance weight, add the chance then a semicolon ${FORMAT_HIGHLIGHT};${FORMAT_INFO}
+					before the block type.\n
 					${FORMAT_HIGHLIGHT_2}Examples:\n
 					${FORMAT_VERBOSE}//set ,n home air ${FORMAT_INFO}(sets all blocks to air in selection
 					${FORMAT_HIGHLIGHT_2}home${FORMAT_INFO})\n

@@ -15,6 +15,8 @@
 
 namespace WorldEditArt;
 
+use pocketmine\block\Block;
+use pocketmine\item\Item;
 use pocketmine\level\Level;
 use pocketmine\level\Location;
 use pocketmine\level\Position;
@@ -22,6 +24,7 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
+use pocketmine\utils\Config;
 use WorldEditArt\Command\WorldEditArtCommand;
 use WorldEditArt\DataProvider\DataProvider;
 use WorldEditArt\DataProvider\Model\Zone;
@@ -48,6 +51,10 @@ class WorldEditArt extends PluginBase{
 	private $command;
 	/** @var EventListener $listener */
 	private $listener;
+	/** @var int[] */
+	private $itemNamesCache = [];
+	/** @var string[] */
+	private $symbolsCache = [];
 
 	/** @var WorldEditArtUser[] $playerUsers */
 	public $playerUsers = [];
@@ -180,6 +187,36 @@ class WorldEditArt extends PluginBase{
 		}
 	}
 
+	public function preprocessUserInput(array $args) : array{
+		if(!isset($this->symbolsCache)){
+			$this->symbolsCache = (new Config($this->getFile() . "resources/symbols.properties", Config::PROPERTIES));
+		}
+		foreach($args as &$arg){
+			$arg = str_replace(array_keys($this->symbolsCache), array_values($this->symbolsCache), $arg);
+		}
+		return $args;
+	}
+
+	public function getItemNames(){
+		if(!isset($this->itemNamesCache)){
+			return $this->itemNamesCache = (new Config($this->getFile() . "resources/itemNames.properties", Config::PROPERTIES))->getAll();
+		}
+		return $this->itemNamesCache;
+	}
+
+	public function getBlockIdByName(string $name){
+		$block = Item::fromString($name)->getBlock();
+		if(strtolower($name) === "air" or $block->getId() !== Block::AIR){
+			return $block->getId();
+		}
+		$id = $this->itemNamesCache[str_replace("_", " ", $name)];
+		$block = Item::get($id)->getBlock();
+		if($id === 0 or $block->getId() !== Block::AIR){
+			return $block->getId();
+		}
+		return null;
+	}
+
 	public static function rotateClockwise(int $side){
 		switch($side){
 			case Vector3::SIDE_NORTH:
@@ -235,5 +272,14 @@ class WorldEditArt extends PluginBase{
 		}else{
 			return null;
 		}
+	}
+
+	public static function itemTypeHash(int $id, int $damage) : int{
+		return ($damage << 16) | ($id & 0xFFFF);
+	}
+
+	public static function itemTypeDeHash(int $hash, int &$id, int &$damage){
+		$id = $hash & 0xFFFF;
+		$damage = $hash >> 16;
 	}
 }

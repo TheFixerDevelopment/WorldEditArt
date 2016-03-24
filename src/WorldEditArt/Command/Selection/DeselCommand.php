@@ -39,7 +39,7 @@ class DeselCommand extends SubCommand{
 			$user->setSelection(null, $name);
 			return $user->translate(Terms::COMMAND_DESEL_SUCCESS, ["NAME" => $name]);
 		}
-		return $user->translate(Terms::COMMAND_DESEL_FAILURE, ["NAME" => $name]);
+		return $user->translate(Terms::COMMAND_ERROR_NO_SEL, ["NAME" => $name]);
 	}
 
 	public function hasPermission(WorldEditArtUser $user){

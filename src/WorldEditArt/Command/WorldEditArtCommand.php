@@ -80,6 +80,7 @@ class WorldEditArtCommand extends Command implements PluginIdentifiableCommand{
 			$sender->sendMessage($this->getMain()->translate(Terms::COMMAND_ERROR_USER_LOADING));
 			return false;
 		}
+		$args = $this->getMain()->preprocessUserInput($args);
 		$result = $this->subCmds[$alias]->run($user, ...$args);
 		if(is_string($result)){
 			$sender->sendMessage($result);
