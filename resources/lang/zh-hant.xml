@@ -13,8 +13,8 @@
 	@author LegendsOfMCPE
 -->
 
-<language name="zh-tr" version="1.3" rel="1.3">
-	<authors since="1.0" updated="1.3">
+<language name="zh-tr" version="1.4" rel="1.4">
+	<authors since="1.0" updated="1.4">
 		<author>PEMapModder</author>
 	</authors>
 	<constants>
@@ -47,17 +47,27 @@
 	</constants>
 	<values>
 		<command>
+			<generic>
+				<substituting since="1.4" updated="1.4">
+					${FORMAT_WARNING}新的${SEL}將取代你原本的${SEL} (${ORIGINAL})
+				</substituting>
+			</generic>
 			<error>
-				<notFound since="1.0" updated="1.0">你輸入了未知的${SUBCMD}！輸入 `//help` 以獲取更多資訊。</notFound>
+				<notFound since="1.0" updated="1.0">你輸入了未知的@{SUBCMD}！輸入 `//help` 以獲取更多資訊。</notFound>
 				<userLoading since="1.0" updated="1.0">載入你的使用者資料中，請稍等。</userLoading>
 				<noPerm since="1.0" updated="1.0">你沒有權限使用此${SUBCMD}！</noPerm>
-				<outOfRange since="1.1" updated="1.1">你所選擇的位置在世界以外！</outOfRange>
+				<outOfRange since="1.1" updated="1.4">
+					<both since="1.4" updated="1.4">你所選擇的位置在世界以外！</both>
+					<tooHigh since="1.4" updated="1.4">你的位置/@{SEL}太高了！</tooHigh>
+					<tooLow since="1.4" updated="1.4">你的位置/@{SEL}太低了！</tooLow>
+				</outOfRange>
 				<noSel since="1.3" updated="1.3" vars="NAME">
 					${FORMAT_ERROR}你沒有一個名為${FORMAT_HIGHLIGHT}${NAME}${FORMAT_ERROR}的@{SEL}！
 				</noSel>
 				<unknownBlock since="1.3" updated="1.3" vars="TYPE">
 					${FORMAT_ERROR}未知的@{BLOCK_TYPE}︰${FORMAT_HIGHLIGHT}${TYPE}
 				</unknownBlock>
+				<usage since="1.4" updated="1.4" vars="USAGE">${FORMAT_INFO}用法︰${USAGE}</usage>
 			</error>
 			<help since="1.0" updated="1.0">
 				<description>顯示這個協助訊息</description>
@@ -106,7 +116,25 @@
 				</detailedUsage>
 				<pending vars="COUNT">${FORMAT_PROGRESS}正在@{SET}${COUNT}個方塊……</pending>
 			</set>
+			<sphere since="1.4" updated="1.4">
+				<description>選取一個球體</description>
+				<usage>//sph &lt;半徑&gt;</usage>
+				<success vars="NEW,NAME">${FORMAT_SUCCESS}已選取${FORMAT_HIGHLIGHT}${NEW}${FORMAT_HIGHLIGHT_2}為${NAME}
+				</success>
+			</sphere>
 		</command>
+		<spaces since="1.4" updated="1.4">
+			<cuboid vars="POS_1,POS_2,LEVEL">
+				世界${FORMAT_HIGHLIGHT_3}${LEVEL}中${FORMAT_HIGHLIGHT_2}${POS_1}到${POS_2}${FORMAT_HIGHLIGHT}的長方體
+			</cuboid>
+			<sphere vars="CENTER,RADIUS,LEVEL">
+				世界${FORMAT_HIGHLIGHT_3}${LEVEL}中在${FORMAT_HIGHLIGHT_2}${CENTER}${FORMAT_HIGHLIGHT_1}、
+				${FORMAT_HIGHLIGHT_2}半徑${RADIUS}${FORMAT_HIGHLIGHT}的球體
+			</sphere>
+			<cylinder vars="CENTER,TOP,RADIUS,AXIS,LEVEL">
+				${FORMAT_HIGHLIGHT_3}${LEVEL}中${FORMAT_HIGHLIGHT_3}沿${AXIS}-軸${FORMAT_HIGHLIGHT_2}從${CENTER}到${TOP}的圓柱體
+			</cylinder>
+		</spaces>
 		<info>
 			<zone since="1.1" updated="1.1">
 				<entry vars="ZONE_NAME,ZONE_TYPE">
@@ -145,5 +173,8 @@
 				</properties>
 			</spaces>
 		</phrases>
+		<formats since="1.4" updated="1.4">
+			<pos vars="X,Y,Z,LEVEL">世界${LEVEL}裏的 (${X}, ${Y}, ${Z})</pos>
+		</formats>
 	</values>
 </language>

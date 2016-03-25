@@ -16,12 +16,16 @@
 namespace WorldEditArt\InternalConstants;
 
 class Terms{
+	const COMMAND_GENERIC_SUBSTITUTING = "command.generic.substituting";
 	const COMMAND_ERROR_NOT_FOUND = "command.error.notFound";
 	const COMMAND_ERROR_USER_LOADING = "command.error.userLoading";
 	const COMMAND_ERROR_NO_PERM = "command.error.noPerm";
 	const COMMAND_ERROR_NO_SEL = "command.error.noSel";
-	const COMMAND_ERROR_OUT_OF_RANGE = "command.error.outOfRange";
+	const COMMAND_ERROR_OUT_OF_RANGE = "command.error.outOfRange.both";
+	const COMMAND_ERROR_OUT_OF_RANGE_TOO_HIGH = "command.error.outOfRange.tooHigh";
+	const COMMAND_ERROR_OUT_OF_RANGE_TOO_LOW = "command.error.outOfRange.tooLow";
 	const COMMAND_ERROR_UNKNOWN_BLOCK = "command.error.unknownBlock";
+	const COMMAND_ERROR_USAGE = "command.error.usage";
 
 	const COMMAND_HELP_DESCRIPTION = "command.help.description";
 	const COMMAND_HELP_USAGE = "command.help.usage";
@@ -43,6 +47,14 @@ class Terms{
 	const COMMAND_SET_DETAILED_USAGE = "command.set.detailedUsage";
 	const COMMAND_SET_PENDING = "command.set.pending";
 
+	const COMMAND_SPHERE_DESCRIPTION = "command.sphere.description";
+	const COMMAND_SPHERE_USAGE = "command.sphere.usage";
+	const COMMAND_SPHERE_SUCCESS = "command.sphere.success";
+
+	const SPACES_CUBOID = "spaces.cuboid";
+	const SPACES_SPHERE = "spaces.sphere";
+	const SPACES_CYLINDER = "spaces.cylinder";
+
 	const INFO_ZONE_ENTRY = "info.zone.entry";
 	const INFO_ZONE_ENTRY_DENIED = "info.zone.entryDenied";
 	const INFO_ZONE_LEFT = "info.zone.left";
@@ -59,4 +71,7 @@ class Terms{
 	const PHRASE_SPACE_PROP_POS_2 = "phrases.spaces.properties.pos2";
 	const PHRASE_SPACE_PROP_RADIUS = "phrases.spaces.properties.radius";
 	const PHRASE_SPACE_PROP_HEIGHT = "phrases.spaces.properties.height";
+
+	const FORMATS_VECTOR_3 = "formats.vector3";
+	const FORMATS_POS = "formats.pos";
 }

@@ -67,6 +67,8 @@ abstract class Space{
 
 	public abstract function handlePosCommand();
 
+	public abstract function describe(WorldEditArtUser $user);
+
 	public static function create(Level $level, CommandParser $args = null, WorldEditArtUser $owner = null){
 		$instance = new static($level);
 		if($args !== null){

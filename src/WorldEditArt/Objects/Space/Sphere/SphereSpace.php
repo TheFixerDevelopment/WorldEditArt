@@ -17,9 +17,12 @@ namespace WorldEditArt\Objects\Space\Sphere;
 
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use WorldEditArt\Exception\SelectionOutOfRangeException;
+use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
 use WorldEditArt\User\WorldEditArtUser;
+use WorldEditArt\WorldEditArt;
 
 class SphereSpace extends Space{
 	/** @var Vector3 $center */
@@ -33,8 +36,7 @@ class SphereSpace extends Space{
 		parent::__construct($level);
 		$this->center = $center;
 		if($radius > 0){
-			$this->radius = $radius;
-			$this->radiusSquared = $radius ** 2;
+			$this->setRadius($radius);
 		}
 	}
 
@@ -60,6 +62,12 @@ class SphereSpace extends Space{
 	}
 
 	public function setCenter(Vector3 $center){
+		if($center->y + $this->radius > WorldEditArt::MAX_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_HIGH);
+		}
+		if($center->y - $this->radius < WorldEditArt::MIN_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_LOW);
+		}
 		$this->center = $center;
 	}
 
@@ -79,6 +87,7 @@ class SphereSpace extends Space{
 	public function setRadius(float $radius){
 		$this->radius = $radius;
 		$this->radiusSquared = $radius ** 2;
+		$this->testOutOfRange();
 	}
 
 	public function isValid() : bool{
@@ -105,5 +114,22 @@ class SphereSpace extends Space{
 
 	public function handlePosCommand(){
 		// TODO: Implement handlePosCommand() method.
+	}
+
+	public function describe(WorldEditArtUser $user){
+		return $user->translate(Terms::SPACES_SPHERE, [
+			"CENTER" => $user->translateVector($this->center),
+			"RADIUS" => $this->radius,
+			"LEVEL" => $this->getLevel()->getName(),
+		]);
+	}
+
+	public function testOutOfRange(){
+		if($this->center->y + $this->radius > WorldEditArt::MAX_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_HIGH);
+		}
+		if($this->center->y - $this->radius < WorldEditArt::MIN_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_LOW);
+		}
 	}
 }

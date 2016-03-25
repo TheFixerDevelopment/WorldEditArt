@@ -13,8 +13,10 @@
  * @author PEMapModder
  */
 
-namespace WorldEditArt\Command;
+namespace WorldEditArt\Command\Manipulation;
 
+use WorldEditArt\Command\CommandParser;
+use WorldEditArt\Command\SubCommand;
 use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\Cassette;
@@ -54,6 +56,7 @@ class SetSubCommand extends SubCommand{
 		$seed = $seed === null ? time() : crc32($seed);
 		$list = new WeightedBlockList($seed);
 		while(($type = $params->nextPlain()) !== null){
+			$set = true;
 			$weight = 1.0;
 			if(strpos($type, ";") !== false){
 				list($weight, $type) = explode(";", $type, 2);
@@ -70,6 +73,9 @@ class SetSubCommand extends SubCommand{
 			}
 			$blockType = new WeightedBlockType($weight, $id, $damage);
 			$list->add($blockType);
+		}
+		if(!isset($set)){
+			return $this->getDetailedUsage($user);
 		}
 		$changer = new WeightedListBlockChanger($list);
 		$cassette = new Cassette(($hollow = $params->enabled("h")) ?

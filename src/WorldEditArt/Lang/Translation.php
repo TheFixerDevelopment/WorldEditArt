@@ -15,6 +15,8 @@
 
 namespace WorldEditArt\Lang;
 
+use WorldEditArt\WorldEditArt;
+
 class Translation{
 	/** @var string $id */
 	private $id, $value;
@@ -31,6 +33,11 @@ class Translation{
 		$this->since = $since;
 		$this->updated = $updated;
 		$this->params = $params;
+		if(WorldEditArt::isDebug()){
+			assert(preg_match('/[0-9]+\.[0-9]+', $this->since), "Missing or corrupted updated attribute for translation $this->id");
+			assert(preg_match('/[0-9]+\.[0-9]+', $this->updated), "Missing or corrupted updated attribute for translation $this->id");
+		}
+
 	}
 
 	public function getId() : string{
@@ -54,9 +61,11 @@ class Translation{
 	}
 
 	public function toString(array $vars = []) : string{
-		foreach($this->params as $param){
-			if(!isset($vars[$param])){
-				throw new \InvalidArgumentException("Missing parameter $param");
+		if(WorldEditArt::isDebug()){
+			foreach($this->params as $param){
+				if(!isset($vars[$param])){
+					throw new \InvalidArgumentException("Missing parameter $param");
+				}
 			}
 		}
 		$value = $this->value;

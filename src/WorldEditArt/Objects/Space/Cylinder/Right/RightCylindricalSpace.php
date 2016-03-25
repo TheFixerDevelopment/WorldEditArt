@@ -17,6 +17,7 @@ namespace WorldEditArt\Objects\Space\Cylinder\Right;
 
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
 use WorldEditArt\User\WorldEditArtUser;
@@ -279,5 +280,15 @@ class RightCylindricalSpace extends Space{
 
 	public function handlePosCommand(){
 		// TODO: Implement handlePosCommand() method.
+	}
+
+	public function describe(WorldEditArtUser $user){
+		return $user->translate(Terms::SPACES_CYLINDER, [
+			"CENTER" => $user->translateVector($this->center),
+			"TOP" => $user->translateVector($this->getTop()),
+			"RADIUS" => round($this->radius, 1),
+			"AXIS" => strtoupper($this->axis0()),
+			"LEVEL" => $this->getLevel()->getName(),
+		]);
 	}
 }

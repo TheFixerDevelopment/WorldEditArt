@@ -24,6 +24,7 @@ namespace WorldEditArt\Objects\Space\Cuboid;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
+use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\BatchBlockStream;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
@@ -139,5 +140,13 @@ class CuboidSpace extends Space{
 
 	public function handlePosCommand(){
 		// TODO: Implement handlePosCommand() method.
+	}
+
+	public function describe(WorldEditArtUser $user){
+		return $user->translate(Terms::SPACES_CUBOID, [
+			"POS_1" => $user->translateVector($this->pos1),
+			"POS_2" => $user->translateVector($this->pos2),
+			"LEVEL" => $this->getLevel()->getName(),
+		]);
 	}
 }

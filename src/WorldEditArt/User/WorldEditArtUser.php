@@ -17,9 +17,11 @@ namespace WorldEditArt\User;
 
 use pocketmine\level\Location;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\permission\Permissible;
 use WorldEditArt\DataProvider\Model\UserData;
 use WorldEditArt\InternalConstants\PermissionNames;
+use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\Space\Space;
 use WorldEditArt\WorldEditArt;
 
@@ -72,6 +74,23 @@ abstract class WorldEditArtUser implements Permissible{
 
 	public function sendMessage(string $id, array $vars = []){
 		$this->sendRawMessage((substr($id, 0, 5) === "%raw%") ? $id : $this->main->translate($id, $vars));
+	}
+
+	public function sendUsage(string $id, array $vars = []){
+		$this->sendMessage(Terms::COMMAND_ERROR_USAGE, ["USAGE" => $this->translate($id, $vars)]);
+	}
+
+	public function translateVector(Vector3 $vector){
+		return $this->translate(Terms::FORMATS_VECTOR_3, ["X" => $vector->x, "Y" => $vector->y, "Z" => $vector->z]);
+	}
+
+	public function translatePosition(Position $pos){
+		return $this->translate(Terms::FORMATS_VECTOR_3, [
+			"X" => $pos->x,
+			"Y" => $pos->y,
+			"Z" => $pos->z,
+			"LEVEL" => $pos->getLevel()->getName(),
+		]);
 	}
 
 	public function save(){

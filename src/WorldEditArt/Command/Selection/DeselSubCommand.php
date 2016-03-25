@@ -20,7 +20,7 @@ use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\User\WorldEditArtUser;
 
-class DeselCommand extends SubCommand{
+class DeselSubCommand extends SubCommand{
 	public function getName() : string{
 		return "desel";
 	}

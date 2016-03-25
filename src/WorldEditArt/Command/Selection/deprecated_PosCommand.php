@@ -26,7 +26,8 @@ use WorldEditArt\Objects\Space\Sphere\SphereSpace;
 use WorldEditArt\User\WorldEditArtUser;
 use WorldEditArt\WorldEditArt;
 
-class PosCommand extends BlockSubCommand{
+/** @deprecated */
+class deprecated_PosCommand extends BlockSubCommand{
 	const TYPE_CUBOID = 0;
 	const TYPE_CYLINDER = 1;
 	const TYPE_SPHERE = 2;

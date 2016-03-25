@@ -19,6 +19,9 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
+use WorldEditArt\Command\Manipulation\SetSubCommand;
+use WorldEditArt\Command\Selection\DeselSubCommand;
+use WorldEditArt\Command\Selection\SphereSubCommand;
 use WorldEditArt\Event\WorldEditArtCommandInitEvent;
 use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\InternalConstants\Terms;
@@ -35,7 +38,10 @@ class WorldEditArtCommand extends Command implements PluginIdentifiableCommand{
 		$this->plugin = $plugin;
 		$aliases = [];
 		$plugin->getServer()->getPluginManager()->callEvent($event = new WorldEditArtCommandInitEvent($plugin,
-			new HelpSubCommand($plugin)
+			new HelpSubCommand($plugin),
+			new SphereSubCommand($plugin),
+			new SetSubCommand($plugin),
+			new DeselSubCommand($plugin)
 		));
 		$this->subCmds = $event->getSubCommands();
 		foreach($this->subCmds as $alias => $subCmd){
