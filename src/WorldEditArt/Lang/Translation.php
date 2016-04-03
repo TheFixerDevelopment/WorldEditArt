@@ -35,8 +35,8 @@ class Translation{
 		$this->updated = $updated;
 		$this->params = $params;
 		if(!class_exists(WorldEditArt::class, false) or WorldEditArt::isDebug()){
-			assert(preg_match('/[0-9]+\.[0-9]+', $this->since), "Missing or corrupted updated attribute for translation $this->id");
-			assert(preg_match('/[0-9]+\.[0-9]+', $this->updated), "Missing or corrupted updated attribute for translation $this->id");
+			assert(preg_match('/[0-9]+\.[0-9]+/', $this->since), "Missing or corrupted updated attribute for translation $this->id");
+			assert(preg_match('/[0-9]+\.[0-9]+/', $this->updated), "Missing or corrupted updated attribute for translation $this->id");
 		}
 	}
 
