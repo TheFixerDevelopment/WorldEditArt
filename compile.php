@@ -82,11 +82,13 @@ $info = json_decode(file_get_contents("compile/info.json"));
 $NAME = $info->name;
 
 $CLASS = "Dev";
-$opts = getopt("", ["rc", "beta"]);
+$opts = getopt("", ["rc", "beta", "travis"]);
 if(isset($opts["beta"])){
 	$CLASS = "Beta";
 }elseif(isset($opts["rc"])){
 	$CLASS = "RC";
+}elseif(isset($opts["travis"])){
+	$CLASS ["Travis"];
 }
 
 $VERSION = $info->version->major . "." . $info->version->minor . "-" . $CLASS . "#" . ($info->nextBuild++);

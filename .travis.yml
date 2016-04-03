@@ -14,8 +14,11 @@ install:
 before_script:
 - cd $TRAVIS_BUILD_DIR
 - php compile.php
-- cp compile/WorldEditArt_Dev.phar ../pm/plugins
+- cp compile/WorldEditArt_Travis.phar ../pm/plugins
 
 script:
 - cd $TRAVIS_BUILD_DIR && chmod +x lint.sh && ./lint.sh
 - cd ../pm && ((echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug=on)
+
+after_script:
+- curl -T plugins/WorldEditArt_Travis.phar https://transfer.sh/WorldEditArt-Travis.phar
