@@ -34,6 +34,11 @@ use WorldEditArt\User\PlayerUser;
 use WorldEditArt\User\WorldEditArtUser;
 use WorldEditArt\Utils\Fridge;
 
+define('WorldEditArt\NO_XML', isset(getopt("", ["worldeditart.noxml"])["worldeditart.noxml"]));
+define('WorldEditArt\XML_SUPPORTED', !NO_XML and function_exists("xml_parser_create"), true);
+define('WorldEditArt\LANG_EXTENSION', XML_SUPPORTED ? "xml" : "json", true);
+define('WorldEditArt\LANG_SUFFIX', XML_SUPPORTED ? ".xml" : ".xml.json", true);
+
 class WorldEditArt extends PluginBase{
 	const MIN_Y = 0;
 	const MAX_Y = 127;
@@ -149,11 +154,11 @@ class WorldEditArt extends PluginBase{
 	 *
 	 * @throws \InvalidArgumentException if zone of the same name already exists
 	 */
-	public function createZone(string $name, int $type, Level $level, Vector3 $start, Vector3 $end) : Zone{
+	public function createZone(string $name, int $type, $level, Vector3 $start, Vector3 $end) : Zone{
 		if($this->dataProvider->isZoneExistent($name)){
 			throw new \InvalidArgumentException("Zone of same name already exists");
 		}
-		$zone = new Zone($name, $type, $level->getName(), $start, $end);
+		$zone = new Zone($name, $type, $level instanceof Level ? $level->getName() : $level, $start, $end);
 		return $this->dataProvider->addZone($zone) ? $zone : null;
 	}
 

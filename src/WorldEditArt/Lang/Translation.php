@@ -22,6 +22,7 @@ class Translation{
 	private $id, $value;
 	/** @var string $since */
 	private $since, $updated;
+	/** @var string[] */
 	private $params = [];
 
 	public function __construct(string $id, string $value, string $since, string $updated, array $params){
@@ -33,11 +34,14 @@ class Translation{
 		$this->since = $since;
 		$this->updated = $updated;
 		$this->params = $params;
-		if(WorldEditArt::isDebug()){
+		if(!class_exists(WorldEditArt::class, false) or WorldEditArt::isDebug()){
 			assert(preg_match('/[0-9]+\.[0-9]+', $this->since), "Missing or corrupted updated attribute for translation $this->id");
 			assert(preg_match('/[0-9]+\.[0-9]+', $this->updated), "Missing or corrupted updated attribute for translation $this->id");
 		}
+	}
 
+	public static function fromJSONArray(array $jsonArray) : Translation{
+		return new Translation($jsonArray["id"], $jsonArray["value"], $jsonArray["since"], $jsonArray["updated"], $jsonArray["params"]);
 	}
 
 	public function getId() : string{
@@ -61,7 +65,7 @@ class Translation{
 	}
 
 	public function toString(array $vars = []) : string{
-		if(WorldEditArt::isDebug()){
+		if(!class_exists(WorldEditArt::class, false) or WorldEditArt::isDebug()){
 			foreach($this->params as $param){
 				if(!isset($vars[$param])){
 					throw new \InvalidArgumentException("Missing parameter $param");
@@ -73,5 +77,15 @@ class Translation{
 			$value = str_replace("\${" . $varName . "}", $var, $value);
 		}
 		return $value;
+	}
+
+	public function toJSONArray() : array{
+		return [
+			"id" => $this->id,
+			"value" => $this->value,
+			"since" => $this->since,
+			"updated" => $this->updated,
+			"params" => $this->params,
+		];
 	}
 }

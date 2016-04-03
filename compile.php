@@ -13,6 +13,8 @@
  * @author LegendsOfMCPE
  */
 
+use WorldEditArt\Lang\LanguageFileParser;
+
 if(version_compare(PHP_VERSION, "7.0.0", "<")){
 	echo "Fatal: This entry script requires PHP >=7.0.0!\n";
 	exit;
@@ -37,8 +39,7 @@ function addDir(Phar $phar, $from, $localDir){
 		$incl = substr($file, strlen($from));
 		$target = $localDir . $incl;
 		$phar->addFile($file, $target);
-		$i++;
-		echo "\r[$i] Added file $target";
+		printf("\r[%d] Added file $target", ++$i);
 	}
 	echo "\n";
 }
@@ -125,6 +126,25 @@ $phar->addFromString("plugin.yml", yaml_emit([
 addDir($phar, "src", "src");
 addDir($phar, "entry", "entry");
 addDir($phar, "resources", "resources");
+
+require_once "src/WorldEditArt/Utils/GeneralUtils.php";
+require_once "src/WorldEditArt/Lang/Translation.php";
+require_once "src/WorldEditArt/Lang/LanguageFileParser.php";
+foreach(glob("resources/lang/*.xml") as $file){
+	$basename = basename($file);
+	printf("[%d] Compiling alternate JSON language file $basename.json...\n", ++$i);
+	$parser = new LanguageFileParser(file_get_contents($file));
+	$json = $parser->toJSON();
+	$phar->addFromString($file . ".json", $json);
+}
+
+/** @var PharFileInfo $info */
+foreach($phar as $info){
+	if($info->getSize() >= 8 << 10){
+		$info->compress(Phar::GZ);
+	}
+}
+
 $phar->stopBuffering();
 
 if(is_file("priv/postCompile.php")){

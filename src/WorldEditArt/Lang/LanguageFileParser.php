@@ -44,8 +44,19 @@ class LanguageFileParser{
 	/** @var Translation[] $values */
 	private $values = [];
 
-	public function __construct(string $xml, WorldEditArt $main){
+	/**
+	 * LanguageFileParser constructor.
+	 *
+	 * @param string            $xml
+	 * @param WorldEditArt|null $main
+	 * @param bool              $isXml
+	 */
+	public function __construct(string $xml, $main = null, bool $isXml = true){
 		$this->main = $main;
+		if(!$isXml){
+			$this->fromJSON($xml);
+			return;
+		}
 		$this->parser = xml_parser_create();
 		xml_set_object($this->parser, $this);
 		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, 0);
@@ -88,7 +99,11 @@ class LanguageFileParser{
 		}elseif($this->expectingConstants and $name === "constant"){
 			if(!isset($attr["name"])){
 				$line = xml_get_current_line_number($this->parser);
-				$this->main->getLogger()->warning("Error on line $line of language file: Constant does not have a name");
+				if($this->main !== null){
+					$this->main->getLogger()->warning("Error on line $line of language file: Constant does not have a name");
+				}else{
+					echo "[WARNING] Error on line $line of language file: Constant does not have a name\n";
+				}
 			}
 			$this->lastConstantName = $attr["name"];
 			$this->buffer = "";
@@ -169,5 +184,30 @@ class LanguageFileParser{
 
 	public function finalize(){
 		unset($this->parser, $this->buffer, $this->expectingAuthors, $this->expectingConstants, $this->valuesMode, $this->justEndedElement, $this->stack, $this->sinceStack, $this->updatedStack, $this->lastConstantName);
+	}
+
+	public function toJSON() : string{
+		return json_encode([
+			"name" => $this->name,
+			"version" => $this->version,
+			"relEng" => $this->relEng,
+			"authors" => $this->authors,
+			"constants" => $this->constants,
+			"values" => array_map(function (Translation $translation){
+				return $translation->toJSONArray();
+			}, $this->values),
+		], JSON_PRETTY_PRINT | JSON_BIGINT_AS_STRING | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+	}
+
+	private function fromJSON(string $json){
+		$data = json_decode($json, true);
+		$this->name = $data["name"];
+		$this->version = $data["version"];
+		$this->relEng = $data["relEng"];
+		$this->authors = $data["authors"];
+		$this->constants = $data["constants"];
+		foreach($data["values"] as $k => $value){
+			$this->values[$k] = Translation::fromJSONArray($value);
+		}
 	}
 }
