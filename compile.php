@@ -132,12 +132,12 @@ addDir($phar, "resources", "resources");
 require_once "src/WorldEditArt/Utils/GeneralUtils.php";
 require_once "src/WorldEditArt/Lang/Translation.php";
 require_once "src/WorldEditArt/Lang/LanguageFileParser.php";
-foreach(glob("resources/lang/*.xml") as $file){
-	$basename = basename($file);
+foreach(glob("resources/lang/*.xml") as $xml){
+	$basename = basename($xml);
 	printf("[%d] Compiling alternate JSON language file $basename.json...\n", ++$i);
-	$parser = new LanguageFileParser(file_get_contents($file));
+	$parser = new LanguageFileParser(file_get_contents($xml));
 	$json = $parser->toJSON();
-	$phar->addFromString($file . ".json", $json);
+	$phar->addFromString($xml . ".json", $json);
 }
 
 /** @var PharFileInfo $info */
@@ -148,6 +148,8 @@ foreach($phar as $info){
 }
 
 $phar->stopBuffering();
+
+echo "Phar created at " . realpath($file);
 
 if(is_file("priv/postCompile.php")){
 	include "priv/postCompile.php";
