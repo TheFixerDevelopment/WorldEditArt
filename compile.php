@@ -88,7 +88,7 @@ if(isset($opts["beta"])){
 }elseif(isset($opts["rc"])){
 	$CLASS = "RC";
 }elseif(isset($opts["travis"])){
-	$CLASS ["Travis"];
+	$CLASS = "Travis";
 }
 
 $VERSION = $info->version->major . "." . $info->version->minor . "-" . $CLASS . "#" . ($info->nextBuild++);
