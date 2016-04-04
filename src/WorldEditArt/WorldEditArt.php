@@ -75,7 +75,10 @@ class WorldEditArt extends PluginBase{
 	public function onLoad(){
 		self::$PLUGIN_NAME = $this->getName();
 		assert(in_array($this->getServer()->getName(), ["PocketMine-MP", "PocketMine-Soft"]), "Haters Gonna Hate");
-		self::$debug = $this->getServer()->getConfigBoolean("worldeditart.debug");
+		self::$debug = $this->getServer()->getConfigBoolean("worldeditart.debug") or isset(getopt("", ["worldeditart.debug"])["worldeditart.debug"]);
+		if(self::$debug){
+			$this->getLogger()->info("Loading with debug mode");
+		}
 	}
 
 	public function onEnable(){

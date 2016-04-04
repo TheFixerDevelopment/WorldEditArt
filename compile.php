@@ -1,7 +1,7 @@
 <?php
 
 /*
- * NOWHERE Plugin Workspace Framework
+ * NOWHERE Plugin Workspace Framework, adapted for WorldEditArt
  *
  * Copyright (C) 2015-2016 LegendsOfMCPE
  *

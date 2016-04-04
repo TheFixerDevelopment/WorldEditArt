@@ -21,6 +21,15 @@ use const WorldEditArt\LANG_SUFFIX;
 use const WorldEditArt\NO_XML;
 use const WorldEditArt\XML_SUPPORTED;
 
+if(WorldEditArt::isDebug()){
+	function xml_parser_create(){
+		if(!XML_SUPPORTED){
+			throw new \Exception("xml_parser_create() doesn't exist");
+		}
+		\xml_parser_create(...func_get_args());
+	}
+}
+
 class LanguageManager{
 	/** @var WorldEditArt $main */
 	private $main;
@@ -71,14 +80,18 @@ class LanguageManager{
 
 		if(!isset($this->langs["en"])){
 			$fileName = XML_SUPPORTED ? "en.xml" : "en.xml.json";
-			$this->main->getLogger()->alert("$fileName missing in lang folder! Default en.xml will be loaded as fallback language.");
+			$this->main->getLogger()->alert("$fileName missing in lang folder! Default $fileName will be loaded as fallback language.");
 			if(XML_SUPPORTED){
-				$this->parseXML($this->main->getResourceContents("lang/en.xml"), "en");
+				$this->parseXML($this->main->getResourceContents("lang/$fileName"), "en");
 			}else{
-				$this->parseJSON($this->main->getResourceContents("lang/en.xml.json"), "en");
+				$this->parseJSON($this->main->getResourceContents("lang/$fileName"), "en");
 			}
 		}
-		$this->parseXML($this->main->getResourceContents("lang/en.xml"), "/backup");
+		if(XML_SUPPORTED){
+			$this->parseXML($this->main->getResourceContents("lang/en.xml"), "/backup");
+		}else{
+			$this->parseJSON($this->main->getResourceContents("lang/en.xml.json"), "/backup");
+		}
 	}
 
 	private function parseXML(string $xmlData, $forceName = null){
@@ -94,13 +107,23 @@ class LanguageManager{
 		}
 
 		$parser->finalize();
-//		foreach($parser->getValues() as $value){
-//			echo json_encode(["id" => $value->getId(), "value" => $value->getValue(), "since" => $value->getSince(), "updated" => $value->getUpdated()], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), PHP_EOL;
-//		}
 		$this->langs[$name] = $parser;
 	}
 
 	private function parseJSON(string $jsonData, $forceName = null){
+		$parser = new LanguageFileParser($jsonData, $this->main, false);
+		$name = $forceName ?? $parser->getName();
+		foreach($parser->getValues() as $id => $term){
+			if(!isset($this->translations[$id][$name])){
+				foreach($parser->getConstants() as $constant => $value){
+					$term->define($constant, $value);
+				}
+				$this->translations[$id][$name] = $term;
+			}
+		}
+
+		$parser->finalize();
+		$this->langs[$name] = $parser;
 	}
 
 	public function getTerm(string $id, array $langs = [], array $vars = []) : string{
