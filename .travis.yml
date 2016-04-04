@@ -24,6 +24,4 @@ script:
 --worldeditart.debug --pluginchecker.target=WorldEditArt | tee stdout.log; grep 'PluginCheck passed' < stdout.log"
 - "(echo say Without XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline
 --worldeditart.debug --worldeditart.noxml --pluginchecker.target=WorldEditArt | tee stdout.log; grep 'PluginCheck passed' < stdout.log"
-
-after_script:
 - curl -T plugins/WorldEditArt_Travis.phar https://transfer.sh/WorldEditArt-Travis.phar
