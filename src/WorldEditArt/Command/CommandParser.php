@@ -57,9 +57,6 @@ class CommandParser{
 	 * @param string[] $args
 	 */
 	public function __construct(array $args){
-		$this->plain = [];
-		$this->switches = [];
-		$this->opts = [];
 		$currentOpt = null;
 		$quotesOn = false;
 		$currentLongString = "";

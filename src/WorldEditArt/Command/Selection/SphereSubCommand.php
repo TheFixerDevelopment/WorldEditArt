@@ -18,7 +18,6 @@ namespace WorldEditArt\Command\Selection;
 use pocketmine\block\Block;
 use WorldEditArt\Command\BlockSubCommand;
 use WorldEditArt\Command\CommandParser;
-use WorldEditArt\Exception\SelectionOutOfRangeException;
 use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\Space\Sphere\SphereSpace;
@@ -36,11 +35,7 @@ class SphereSubCommand extends BlockSubCommand{
 		if($sel !== null){
 			$user->sendMessage(Terms::COMMAND_GENERIC_SUBSTITUTING, ["SEL" => $sel->describe($user)]);
 		}
-		try{
-			$new = new SphereSpace($block->getLevel(), $block, $radius);
-		}catch(SelectionOutOfRangeException $ex){
-			return $user->translate($ex->translate());
-		}
+		$new = new SphereSpace($block->getLevel(), $block, $radius);
 		$user->setSelection($new, $selName);
 		return $user->translate(Terms::COMMAND_SPHERE_SUCCESS, ["NEW" => $new->describe($user), "NAME" => $selName]);
 	}

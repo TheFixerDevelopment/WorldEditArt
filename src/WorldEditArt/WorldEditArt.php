@@ -29,6 +29,7 @@ use WorldEditArt\Command\WorldEditArtCommand;
 use WorldEditArt\DataProvider\DataProvider;
 use WorldEditArt\DataProvider\Model\Zone;
 use WorldEditArt\DataProvider\SerializedDataProvider;
+use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\Lang\LanguageManager;
 use WorldEditArt\User\PlayerUser;
 use WorldEditArt\User\WorldEditArtUser;
@@ -88,6 +89,12 @@ class WorldEditArt extends PluginBase{
 		$this->dataProvider = new SerializedDataProvider($this);
 		$this->command = new WorldEditArtCommand($this);
 		$this->listener = new EventListener($this);
+
+		if(WorldEditArt::isDebug()){
+			foreach((new \ReflectionClass(PermissionNames::class))->getConstants() as $name){
+				assert($this->getServer()->getPluginManager()->getPermission($name) !== null, "Permission $name doesn't exist");
+			}
+		}
 	}
 
 	public function getResourceFolder(string $file = "") : string{
@@ -197,7 +204,7 @@ class WorldEditArt extends PluginBase{
 
 	public function preprocessUserInput(array $args) : array{
 		if(!isset($this->symbolsCache)){
-			$this->symbolsCache = (new Config($this->getFile() . "resources/symbols.properties", Config::PROPERTIES));
+			$this->symbolsCache = (new Config($this->getFile() . "resources/translated/symbols.properties", Config::PROPERTIES));
 		}
 		foreach($args as &$arg){
 			$arg = str_replace(array_keys($this->symbolsCache), array_values($this->symbolsCache), $arg);
@@ -207,7 +214,7 @@ class WorldEditArt extends PluginBase{
 
 	public function getItemNames(){
 		if(!isset($this->itemNamesCache)){
-			return $this->itemNamesCache = (new Config($this->getFile() . "resources/itemNames.properties", Config::PROPERTIES))->getAll();
+			return $this->itemNamesCache = (new Config($this->getFile() . "resources/translated/itemNames.properties", Config::PROPERTIES))->getAll();
 		}
 		return $this->itemNamesCache;
 	}

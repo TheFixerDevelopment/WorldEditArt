@@ -15,11 +15,14 @@
 
 namespace WorldEditArt\InternalConstants;
 
-class PermissionNames{
+interface PermissionNames{
 	const COMMAND_MAIN = "worldeditart.builder.command";
 	const COMMAND_DESEL = "worldeditart.builder.desel";
 	const COMMAND_SET = "worldeditart.builder.set";
-	const COMMAND_SPHERE = "worldeditart.builder.sphere";
+	const COMMAND_SPHERE = "worldeditart.builder.select.sphere";
+	const COMMAND_POS_1 = "worldeditart.builder.select.pos1";
+	const COMMAND_POS_2 = "worldeditart.builder.select.pos2";
+
 	const BYPASS_UNDER_CONSTRUCTION = "worldeditart.admin.zones.bypass.constr";
 	const CREATE_UNDER_CONSTRUCTION_ZONE = "worldeditart.admin.zones.create.constr";
 	const REMOVE_UNDER_CONSTRUCTION_ZONE = "worldeditart.admin.zones.remove.constr";

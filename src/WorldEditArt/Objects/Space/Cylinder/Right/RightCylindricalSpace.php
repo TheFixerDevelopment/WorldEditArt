@@ -15,8 +15,11 @@
 
 namespace WorldEditArt\Objects\Space\Cylinder\Right;
 
+use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\math\Vector3;
+use WorldEditArt\Exception\SelectionOutOfRangeException;
+use WorldEditArt\Exception\SpaceInstantiationException;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
@@ -28,6 +31,10 @@ class RightCylindricalSpace extends Space{
 	const DIRECTION_X = 0;
 	const DIRECTION_Y = 1;
 	const DIRECTION_Z = 2;
+
+	const PROP_RADIUS = "radius";
+	const PROP_TOP = "top";
+	const PROP_HEIGHT = "height";
 
 	/** @var int $direction */
 	private $direction;
@@ -47,7 +54,7 @@ class RightCylindricalSpace extends Space{
 		$this->direction = $direction;
 		$this->center = $center === null ? null : $center->floor();
 		if($radius !== -1.0){
-			$this->radius = $radius;
+			$this->setRadius($radius);
 		}
 		if($center !== null and $top !== null){
 			$a0 = $this->axis0();
@@ -105,6 +112,16 @@ class RightCylindricalSpace extends Space{
 	}
 
 	public function setRadius(float $radius){
+		if($this->direction === self::DIRECTION_Y){
+			$max = max($this->center->y, $this->center->y + $this->height);
+			$min = min($this->center->y, $this->center->y + $this->height);
+			if($max > WorldEditArt::MAX_Y){
+				throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_HIGH);
+			}
+			if($min < WorldEditArt::MIN_Y){
+				throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_LOW);
+			}
+		}
 		$this->radius = $radius;
 	}
 
@@ -154,7 +171,7 @@ class RightCylindricalSpace extends Space{
 		$a0 = $this->axis0();
 		$a1 = $this->axis1();
 		$a2 = $this->axis2();
-		$this->height = $top->{$a0} - $this->center->{$a0};
+		$this->setHeight($top->{$a0} - $this->center->{$a0});
 		$this->tilt1 = $top->{$a1} - $this->center->{$a1};
 		$this->tilt2 = $top->{$a2} - $this->center->{$a2};
 	}
@@ -193,6 +210,13 @@ class RightCylindricalSpace extends Space{
 		}
 	}
 
+	/**
+	 * @deprecated
+	 *
+	 * @param string                $name
+	 * @param string                $value
+	 * @param WorldEditArtUser|null $owner
+	 */
 	protected function handleCreationArg(string $name, string $value, WorldEditArtUser $owner = null){
 		if($owner !== null){
 			$dir = WorldEditArt::getDirection($loc = $owner->getLocation());
@@ -278,15 +302,39 @@ class RightCylindricalSpace extends Space{
 		}
 	}
 
-	public function handlePosCommand(){
-		// TODO: Implement handlePosCommand() method.
+	public static function instantiate(Level $level){
+		throw new SpaceInstantiationException(Terms::COMMAND_ERROR_CENTER_FIRST, [
+			"TYPE" => Terms::PHRASE_SPACE_TYPE_CYLINDER_RIGHT,
+			"COMMAND" => "cyl",
+		]);
+	}
+
+	public function handlePosCommand(string $propertyName, Block $block) : bool{
+		$a0 = $this->axis0();
+		$a1 = $this->axis1();
+		$a2 = $this->axis2();
+		switch($propertyName){
+			case self::PROP_HEIGHT:
+				$this->setHeight($block->{$a0} - $this->center->{$a0});
+				return true;
+			case self::PROP_RADIUS:
+				$d1 = $block->{$a1} - $this->center->{$a1};
+				$d2 = $block->{$a2} - $this->center->{$a2};
+				$this->setRadius(sqrt($d1 * $d1 + $d2 * $d2));
+				return true;
+			case self::PROP_TOP:
+				$this->setTop($block);
+				return true;
+		}
+		return false;
 	}
 
 	public function describe(WorldEditArtUser $user){
+		$undefined = $user->translate(Terms::PHRASE_UNDEFINED);
 		return $user->translate(Terms::SPACES_CYLINDER, [
-			"CENTER" => $user->translateVector($this->center),
-			"TOP" => $user->translateVector($this->getTop()),
-			"RADIUS" => round($this->radius, 1),
+			"CENTER" => isset($center) ? $user->translateVector($this->center) : $undefined,
+			"TOP" => $this->isValid() ? $user->translateVector($this->getTop()) : $undefined,
+			"RADIUS" => isset($this->radius) ? round($this->radius, 1) : $undefined,
 			"AXIS" => strtoupper($this->axis0()),
 			"LEVEL" => $this->getLevel()->getName(),
 		]);

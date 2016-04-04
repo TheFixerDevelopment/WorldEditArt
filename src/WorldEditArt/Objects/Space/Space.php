@@ -15,6 +15,7 @@
 
 namespace WorldEditArt\Objects\Space;
 
+use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
@@ -65,10 +66,21 @@ abstract class Space{
 		}
 	}
 
-	public abstract function handlePosCommand();
+	public abstract function handlePosCommand(string $propertyName, Block $block) : bool;
 
 	public abstract function describe(WorldEditArtUser $user);
 
+	public static function instantiate(Level $level){
+		return new static($level);
+	}
+
+	/**
+	 * @deprecated
+	 *
+	 * @param Level                 $level
+	 * @param CommandParser|null    $args
+	 * @param WorldEditArtUser|null $owner
+	 */
 	public static function create(Level $level, CommandParser $args = null, WorldEditArtUser $owner = null){
 		$instance = new static($level);
 		if($args !== null){
@@ -78,6 +90,13 @@ abstract class Space{
 		}
 	}
 
+	/**
+	 * @deprecated
+	 *
+	 * @param string                $name
+	 * @param string                $value
+	 * @param WorldEditArtUser|null $owner
+	 */
 	protected function handleCreationArg(string $name, string $value, WorldEditArtUser $owner = null){
 	}
 }

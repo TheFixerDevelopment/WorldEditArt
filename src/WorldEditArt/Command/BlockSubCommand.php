@@ -25,7 +25,7 @@ abstract class BlockSubCommand extends SubCommand{
 		$params = new CommandParser($args);
 		$block = $user->getLocation();
 		if(($anchorName = $params->optOpt("a", "default", null)) !== null){
-			$block = $user->getAnchor($params);
+			$block = $user->getBookmark($params);
 		}
 		if($block->getFloorY() > WorldEditArt::MAX_Y or $block->getFloorY() < WorldEditArt::MIN_Y){
 			$user->sendMessage(Terms::COMMAND_ERROR_OUT_OF_RANGE);

@@ -19,7 +19,11 @@
 			<command description="Allows using //help"/>
 			<desel description="Allows using //desel"/>
 			<set description="Allows using //set"/>
-			<sphere description="Allows using //sphere"/>
+			<select description="Allows using selection commands">
+				<sphere description="Allows using //sphere"/>
+				<pos1 description="Allows using //pos1"/>
+				<pos2 description="Allows using //pos2"/>
+			</select>
 		</builder>
 		<admin description="Permissions beyond builders' rights" default="false">
 			<zones description="Allows administration of zones" default="false">

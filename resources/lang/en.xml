@@ -13,7 +13,7 @@
 	@author LegendsOfMCPE
 -->
 
-<language name="en" version="1.4" rel="1.4">
+<language name="en" version="1.5" rel="1.5">
 	<authors>
 		<author since="1.0" updated="1.3">PEMapModder</author>
 	</authors>
@@ -68,6 +68,10 @@
 					${FORMAT_ERROR}Unknown block type ${FORMAT_HIGHLIGHT}${TYPE}
 				</unknownBlock>
 				<usage since="1.4" updated="1.4" vars="USAGE">${FORMAT_INFO}Usage: ${USAGE}</usage>
+				<centerFirst since="1.5" updated="1.5" vars="TYPE,COMMAND">
+					${FORMAT_ERROR}Please select the center of the ${TYPE} first!\n
+					${FORMAT_WARNING}You can use the command //${COMMAND} to do so.
+				</centerFirst>
 			</error>
 			<help since="1.0" updated="1.0">
 				<description>Show this help message</description>
@@ -86,6 +90,8 @@
 					<formula vars="TYPE,PROP">Selects a ${TYPE} selection's ${PROP}</formula>
 				</description>
 				<usage vars="NAME">/${NAME} [anchor name]</usage>
+				<displaced vars="OLD">${FORMAT_WARNING}Your old selection, ${OLD}, has been replaced.</displaced>
+				<success vars="SPACE">${FORMAT_SUCCESS}Your selection is now ${SPACE}</success>
 			</pos>
 			<desel since="1.2" updated="1.2">
 				<description>Deselect your selection</description>
@@ -158,6 +164,8 @@
 			</zone>
 		</info>
 		<phrases>
+			<unknown>unknown</unknown>
+			<undefined>undefined</undefined>
 			<spaces since="1.1" updated="1.1">
 				<types>
 					<cuboid>cuboid</cuboid>

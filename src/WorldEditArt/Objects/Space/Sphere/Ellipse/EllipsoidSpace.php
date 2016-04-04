@@ -15,6 +15,7 @@
 
 namespace WorldEditArt\Objects\Space\Sphere\Ellipse;
 
+use pocketmine\block\Block;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use WorldEditArt\Objects\BlockStream\BlockStream;
@@ -73,6 +74,17 @@ class EllipsoidSpace extends Space{
 		return $this->zRadius;
 	}
 
+	public function describe(WorldEditArtUser $user){
+		// TODO: Implement describe() method.
+	}
+
+	/**
+	 * @deprecated
+	 *
+	 * @param string           $name
+	 * @param string           $value
+	 * @param WorldEditArtUser $owner
+	 */
 	protected function handleCreationArg(string $name, string $value, WorldEditArtUser $owner){
 		switch($name){
 			case "xr":
@@ -102,7 +114,7 @@ class EllipsoidSpace extends Space{
 		}
 	}
 
-	public function handlePosCommand(){
+	public function handlePosCommand(string $propertyName, Block $block) : bool{
 		// TODO: Implement handlePosCommand() method.
 	}
 }

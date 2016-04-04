@@ -50,5 +50,10 @@ abstract class SubCommand{
 
 	public abstract function run(WorldEditArtUser $user, string ...$args);
 
+	/**
+	 * @param WorldEditArtUser $user
+	 *
+	 * @return bool
+	 */
 	public abstract function hasPermission(WorldEditArtUser $user);
 }

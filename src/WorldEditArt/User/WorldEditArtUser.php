@@ -36,8 +36,8 @@ abstract class WorldEditArtUser implements Permissible{
 	/** @var Space[] $selections */
 	private $selections = [];
 
-	/** @var Position[] $anchors */
-	private $anchors = [];
+	/** @var Position[] $bookmarks */
+	private $bookmarks = [];
 
 	/** @var int $closeTime */
 	private $closeTime = 0;
@@ -62,6 +62,10 @@ abstract class WorldEditArtUser implements Permissible{
 
 	public function getLangs() : array{
 		return $this->data->langs;
+	}
+
+	public function getMain() : WorldEditArt{
+		return $this->main;
 	}
 
 	public function getData() : UserData{
@@ -136,12 +140,16 @@ abstract class WorldEditArtUser implements Permissible{
 	 *
 	 * @return Position|null
 	 */
-	public function getAnchor(string $name = "default"){
-		return $this->anchors[$name] ?? null;
+	public function getBookmark(string $name = "default"){
+		return $this->bookmarks[$name] ?? null;
 	}
 
-	public function setAnchor(Position $position, string $name = "default"){
-		$this->anchors[$name] = $position;
+	public function setBookmark(Position $position = null, string $name = "default"){
+		if($position === null){
+			unset($this->bookmarks[$name]);
+			return;
+		}
+		$this->bookmarks[$name] = $position;
 	}
 
 	public function canBuild(Position $pos) : bool{

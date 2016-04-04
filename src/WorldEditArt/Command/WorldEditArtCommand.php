@@ -23,6 +23,7 @@ use WorldEditArt\Command\Manipulation\SetSubCommand;
 use WorldEditArt\Command\Selection\DeselSubCommand;
 use WorldEditArt\Command\Selection\SphereSubCommand;
 use WorldEditArt\Event\WorldEditArtCommandInitEvent;
+use WorldEditArt\Exception\WorldEditArtExplainableException;
 use WorldEditArt\InternalConstants\PermissionNames;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\User\WorldEditArtUser;
@@ -87,7 +88,12 @@ class WorldEditArtCommand extends Command implements PluginIdentifiableCommand{
 			return false;
 		}
 		$args = $this->getMain()->preprocessUserInput($args);
-		$result = $this->subCmds[$alias]->run($user, ...$args);
+		try{
+			$result = $this->subCmds[$alias]->run($user, ...$args);
+		}catch(WorldEditArtExplainableException $e){
+			$e->explain($user);
+			return false;
+		}
 		if(is_string($result)){
 			$sender->sendMessage($result);
 		}

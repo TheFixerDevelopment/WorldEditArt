@@ -54,6 +54,10 @@ class PlayerUser extends WorldEditArtUser{
 	}
 
 	public function hasPermission($name){
+//		if(WorldEditArt::isDebug()){
+//			$pluginMgr = $this->getMain()->getServer()->getPluginManager();
+//			assert($pluginMgr->getPermission($name) !== null);
+//		}
 		return $this->player->hasPermission($name);
 	}
 

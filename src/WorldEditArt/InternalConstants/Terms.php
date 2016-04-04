@@ -15,7 +15,7 @@
 
 namespace WorldEditArt\InternalConstants;
 
-class Terms{
+interface Terms{
 	const COMMAND_GENERIC_SUBSTITUTING = "command.generic.substituting";
 	const COMMAND_ERROR_NOT_FOUND = "command.error.notFound";
 	const COMMAND_ERROR_USER_LOADING = "command.error.userLoading";
@@ -26,6 +26,7 @@ class Terms{
 	const COMMAND_ERROR_OUT_OF_RANGE_TOO_LOW = "command.error.outOfRange.tooLow";
 	const COMMAND_ERROR_UNKNOWN_BLOCK = "command.error.unknownBlock";
 	const COMMAND_ERROR_USAGE = "command.error.usage";
+	const COMMAND_ERROR_CENTER_FIRST = "command.error.centerFirst";
 
 	const COMMAND_HELP_DESCRIPTION = "command.help.description";
 	const COMMAND_HELP_USAGE = "command.help.usage";
@@ -36,6 +37,8 @@ class Terms{
 
 	const COMMAND_POS_DESCRIPTION_FORMULA = "command.pos.description.formula";
 	const COMMAND_POS_USAGE = "command.pos.usage";
+	const COMMAND_POS_DISPLACED = "command.pos.displaced";
+	const COMMAND_POS_SUCCESS = "command.pos.success";
 
 	const COMMAND_DESEL_DESCRIPTION = "command.desel.description";
 	const COMMAND_DESEL_USAGE = "command.desel.usage";
@@ -59,6 +62,8 @@ class Terms{
 	const INFO_ZONE_ENTRY_DENIED = "info.zone.entryDenied";
 	const INFO_ZONE_LEFT = "info.zone.left";
 
+	const PHRASE_UNKNOWN = "phrase.unknown";
+	const PHRASE_UNDEFINED = "phrase.undefined";
 	const PHRASE_SPACE_TYPE_CUBOID = "phrases.spaces.type.cuboid";
 	const PHRASE_SPACE_TYPE_CYLINDER_GENERIC = "phrases.spaces.type.cylinder.generic";
 	const PHRASE_SPACE_TYPE_CYLINDER_RIGHT = "phrases.spaces.type.cylinder.right";

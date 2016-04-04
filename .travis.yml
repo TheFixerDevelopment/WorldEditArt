@@ -17,8 +17,9 @@ before_script:
 - cp compile/WorldEditArt_Travis.phar ../pm/plugins
 
 script:
-- cd $TRAVIS_BUILD_DIR && chmod +x lint.sh && ./lint.sh
-- cd ../pm && ((echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug=on)
+- cd $TRAVIS_BUILD_DIR && chmod +x lint.sh && ./lint.sh && cd ../pm
+- (echo say With XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug
+- (echo say No XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug --worldeditart.noxml
 
 after_script:
 - curl -T plugins/WorldEditArt_Travis.phar https://transfer.sh/WorldEditArt-Travis.phar

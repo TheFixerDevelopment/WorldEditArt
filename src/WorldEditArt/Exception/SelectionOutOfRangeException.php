@@ -17,7 +17,7 @@ namespace WorldEditArt\Exception;
 
 use WorldEditArt\InternalConstants\Terms;
 
-class SelectionOutOfRangeException extends \OutOfBoundsException{
+class SelectionOutOfRangeException extends WorldEditArtExplainableException{
 	const UNKNOWN = 0;
 	const TOO_HIGH = 1;
 	const TOO_LOW = 2;
@@ -26,7 +26,7 @@ class SelectionOutOfRangeException extends \OutOfBoundsException{
 
 	public function __construct(int $type){
 		$this->type = $type;
-		parent::__construct("Selection out of range");
+		parent::__construct($this->translate());
 	}
 
 	public function getType() : int{

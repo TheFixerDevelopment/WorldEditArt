@@ -21,16 +21,22 @@
 
 namespace WorldEditArt\Objects\Space\Cuboid;
 
+use pocketmine\block\Block;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
+use WorldEditArt\Exception\SelectionOutOfRangeException;
 use WorldEditArt\InternalConstants\Terms;
 use WorldEditArt\Objects\BlockStream\BatchBlockStream;
 use WorldEditArt\Objects\BlockStream\BlockStream;
 use WorldEditArt\Objects\Space\Space;
 use WorldEditArt\User\WorldEditArtUser;
+use WorldEditArt\WorldEditArt;
 
 class CuboidSpace extends Space{
+	const PROP_POS_1 = "pos1";
+	const PROP_POS_2 = "pos2";
+
 	/** @var Vector3|null $pos1 */
 	private $pos1;
 	/** @var Vector3|null $pos2 */
@@ -38,8 +44,12 @@ class CuboidSpace extends Space{
 
 	public function __construct(Level $level, Vector3 $pos1 = null, Vector3 $pos2 = null){
 		parent::__construct($level);
-		$this->setPos1($pos1);
-		$this->setPos2($pos2);
+		if($pos1 !== null){
+			$this->setPos1($pos1);
+		}
+		if($pos2 !== null){
+			$this->setPos2($pos2);
+		}
 	}
 
 	/**
@@ -56,18 +66,31 @@ class CuboidSpace extends Space{
 		return $this->pos2;
 	}
 
-	public function setPos1(Vector3 $pos1){
-		if($pos1 instanceof Position and $pos1->getLevel() !== $this->getLevel()){
+	public function setPos1(Vector3 $pos){
+		if($pos instanceof Position and $pos->getLevel() !== $this->getLevel()){
 			throw new \InvalidArgumentException("Each space can only be in one level");
 		}
-		$this->pos1 = $pos1->floor();
+		$pos = $pos->floor();
+		if($pos->y > WorldEditArt::MAX_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_HIGH);
+		}
+		if($pos->y < WorldEditArt::MIN_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_LOW);
+		}
+		$this->pos1 = $pos;
 	}
 
-	public function setPos2(Vector3 $pos2){
-		if($pos2 instanceof Position and $pos2->getLevel() !== $this->getLevel()){
+	public function setPos2(Vector3 $pos){
+		if($pos instanceof Position and $pos->getLevel() !== $this->getLevel()){
 			throw new \InvalidArgumentException("Each space can only be in one level");
 		}
-		$this->pos2 = $pos2->floor();
+		if($pos->y > WorldEditArt::MAX_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_HIGH);
+		}
+		if($pos->y < WorldEditArt::MIN_Y){
+			throw new SelectionOutOfRangeException(SelectionOutOfRangeException::TOO_LOW);
+		}
+		$this->pos2 = $pos->floor();
 	}
 
 	public function getSolidBlockStream() : BlockStream{
@@ -124,6 +147,33 @@ class CuboidSpace extends Space{
 		return $this->pos1 !== null and $this->pos2 !== null;
 	}
 
+	public function describe(WorldEditArtUser $user){
+		return $user->translate(Terms::SPACES_CUBOID, [
+			"POS_1" => isset($this->pos1) ? $user->translateVector($this->pos1) : $user->translate(Terms::PHRASE_UNDEFINED),
+			"POS_2" => isset($this->pos2) ? $user->translateVector($this->pos2) : $user->translate(Terms::PHRASE_UNDEFINED),
+			"LEVEL" => $this->getLevel()->getName(),
+		]);
+	}
+
+	public function handlePosCommand(string $propertyName, Block $block) : bool{
+		switch($propertyName){
+			case self::PROP_POS_1:
+				$this->setPos1($block->floor());
+				return true;
+			case self::PROP_POS_2:
+				$this->setPos2($block->floor());
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @deprecated
+	 *
+	 * @param WorldEditArtUser $owner
+	 * @param string           $name
+	 * @param string           $value
+	 */
 	protected function handleCreationArg(WorldEditArtUser $owner, string $name, string $value){
 		if($name === "1"){
 			$posField = "pos1";
@@ -136,17 +186,5 @@ class CuboidSpace extends Space{
 				$this->$posField = new Vector3(...array_map("intval", $explosion));
 			}
 		}
-	}
-
-	public function handlePosCommand(){
-		// TODO: Implement handlePosCommand() method.
-	}
-
-	public function describe(WorldEditArtUser $user){
-		return $user->translate(Terms::SPACES_CUBOID, [
-			"POS_1" => $user->translateVector($this->pos1),
-			"POS_2" => $user->translateVector($this->pos2),
-			"LEVEL" => $this->getLevel()->getName(),
-		]);
 	}
 }
