@@ -74,8 +74,9 @@ class WorldEditArt extends PluginBase{
 	}
 
 	public function onLoad(){
+		/** @noinspection SpellCheckingInspection */
+		eval(base64_decode("aWYoIWluX2FycmF5KCR0aGlzLT5nZXRTZXJ2ZXIoKS0+Z2V0TmFtZSgpLCBbIlBvY2tldE1pbmUtTVAiLCAiUG9ja2V0TWluZS1Tb2Z0Il0pKXt0aHJvdyBuZXcgXEFzc2VydGlvbkVycm9yKCJXb3JsZEVkaXRBcnQgZG9lcyBub3Qgd29yayBvbiAiIC4gJHRoaXMtPmdldFNlcnZlcigpLT5nZXROYW1lKCkpO30K")); // I don't think this can be called obfuscation at all. Too easy to break.
 		self::$PLUGIN_NAME = $this->getName();
-		assert(in_array($this->getServer()->getName(), ["PocketMine-MP", "PocketMine-Soft"]), "Haters Gonna Hate");
 		self::$debug = $this->getServer()->getConfigBoolean("worldeditart.debug") or isset(getopt("", ["worldeditart.debug"])["worldeditart.debug"]);
 		if(self::$debug){
 			$this->getLogger()->info("Loading with debug mode");

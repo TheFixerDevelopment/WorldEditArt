@@ -4,6 +4,29 @@ WorldEditArt contribution guidelines
 ## Issues
 You can find the issue tracker [here](../../issues).
 
+When you create an issue, please put crash dumps in code blocks like this:
+
+\`\`\`
+
+(Crash dump here)
+
+\`\`\`
+
+Please, before creating an issue, search if the question is asked first.
+
+Also, these are some frequently asked invalid issues:
+
+* There is no `plugin.yml`. I can't compile the plugin.
+	* The plugin uses the [NOWHERE framework](https://github.com/PEMapModder/NOWHERE). You can't compile it using normal methods.
+	* Please use the [`compile.php`](../compile.php) to compile the plugin. You can also find compiled builds of the plugin [here](../compile).
+* Error messages related to `yaml_parse()`, caused by WorldEditArt:
+	* You have syntax errors in the YAML config. Please read the error message and fix it yourself.
+* Crash because `[Server thread/CRITICAL]: AssertionError: "WorldEditArt does not work on ****" (EXCEPTION)`
+	* WorldEditArt is an advanced plugin that uses many sophisticated structures. It may cause issues if used on unofficial builds of PocketMine-MP (PocketMine-Soft is supported).
+	* And no, you will not be provided with any help to forcefully load this plugin on third-party versions of PocketMine.
+* API 1.x.x
+	* WorldEditArt uses PHP 7. API 1.x.x is no longer supported.
+
 #### I have a question
 For support, please go to the chatroom at [![https://gitter.im/PEMapModder/WorldEditArt](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PEMapModder/WorldEditArt). The issue tracker is for tracking issues on the plugin itself, not tracking support questions.
 
@@ -52,8 +75,9 @@ To correctly translate, please do these step by step:
 
 It is OK to commit changes and send a pull request before you have translated them all, but they won't be merged into the main repo until you have translated everything in that version.
 
-> Protip: _Escape sequences_ are used in JSON texts, i.e. typing `\"` will have output of `"`, and `\n` will have output of `\n`. If you don't use these, the JSON file will have errors.
-> Protip 2: `%SOMETHING_HERE%` refers to a _variable_ (a text that will be changed in different situations), specified in the relevant `params` for the phrase.
+> Protip:
+> * _Escape sequences_ are used in JSON texts, i.e. typing `\"` will have output of `"`, and `\n` will have output of `\n`. If you don't use these, the JSON file will have errors.
+> * : `%SOMETHING_HERE%` refers to a _variable_ (a text that will be changed in different situations), specified in the relevant `params` for the phrase.
 
 ##### Language naming scheme
 The naming of language files mainly relies on [language tags specified here](http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry). However, please use as few tags as possible, and convert the filenames into lowercase.
