@@ -19,8 +19,8 @@ before_script:
 
 script:
 - cd $TRAVIS_BUILD_DIR && chmod +x lint.sh && ./lint.sh && cd ../pm
-- (echo say With XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug | tee >(cat) | grep 'PluginCheck passed'
-- (echo say Without XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug --worldeditart.noxml | tee >(cat) | grep 'PluginCheck passed'
+- (echo say With XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug | tee stdout.log; grep 'PluginCheck passed' < stdout.log
+- (echo say Without XML; echo stop; echo) | php PocketMine-MP.phar --no-wizard --debug.level=2 --disable-readline --worldeditart.debug --worldeditart.noxml | tee stdout.log; grep 'PluginCheck passed' < stdout.log
 
 after_script:
 - curl -T plugins/WorldEditArt_Travis.phar https://transfer.sh/WorldEditArt-Travis.phar
