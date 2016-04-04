@@ -11,7 +11,7 @@ install:
 - cd pm
 - wget -q -O PocketMine-MP.phar http://pmt.mcpe.me/pmb/dl.php?branch=master
 - mkdir plugins
-- wget -O plugins/PluginChecker.php https://gist.githubusercontent.com/PEMapModder/af032e15cde357fd378dff7ca3897782/raw/e9dc97c68e2c112aee1b7e1d7b028801e1ae4db8/PluginChecker.php
+- wget -O plugins/PluginChecker.php https://gist.githubusercontent.com/PEMapModder/af032e15cde357fd378dff7ca3897782/raw/50b97c36d473284f59842ee9d9192811d6b8cebf/PluginChecker.php
 
 before_script:
 - cd $TRAVIS_BUILD_DIR
