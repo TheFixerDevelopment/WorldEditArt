@@ -2,6 +2,7 @@ language: php
 php: ["7.0"]
 sudo: false
 install:
+- echo "Running test on $0"
 - pecl install channel://pecl.php.net/pthreads-3.1.6
 - pecl install channel://pecl.php.net/weakref-0.3.2
 - echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
@@ -10,7 +11,7 @@ install:
 - cd pm
 - wget -q -O PocketMine-MP.phar http://pmt.mcpe.me/pmb/dl.php?branch=master
 - mkdir plugins
-
+- wget -O plugins/PluginChecker.php https://gist.githubusercontent.com/PEMapModder/af032e15cde357fd378dff7ca3897782/raw/e9dc97c68e2c112aee1b7e1d7b028801e1ae4db8/PluginChecker.php
 
 before_script:
 - cd $TRAVIS_BUILD_DIR
