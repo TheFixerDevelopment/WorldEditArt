@@ -63,19 +63,29 @@ function parsePerms(SimpleXMLElement $element, array $parents){
 	foreach($parents as $parent){
 		$prefix .= $parent . ".";
 	}
-	$description = (string) $element->attributes()->description;
-	$default = (string) $element->attributes()->default;
+	if(isset($element->attributes()->description)){
+		$description = (string) $element->attributes()->description;
+	}
+	if(isset($element->attributes()->default)){
+		$default = (string) $element->attributes()->default;
+	}
 	$children = [];
 	foreach($element->children() as $childName => $child){
 		$copy = $parents;
 		$copy[] = $childName;
 		$children[$prefix . $childName] = parsePerms($child, $copy);
 	}
-	return [
-		"description" => $description,
-		"default" => $default,
-		"children" => $children,
-	];
+	$ret = [];
+	if(count($children) > 0){
+		$ret["children"] = $children;
+	}
+	if(isset($description)){
+		$ret["description"] = $description;
+	}
+	if(isset($default)){
+		$ret["default"] = $default;
+	}
+	return $ret;
 }
 
 $info = json_decode(file_get_contents("compile/info.json"));

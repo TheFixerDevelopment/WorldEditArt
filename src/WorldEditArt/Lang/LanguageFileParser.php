@@ -123,7 +123,11 @@ class LanguageFileParser{
 //				echo $key, PHP_EOL;
 				$value = trim($this->buffer);
 				if(strlen($value) > 0){
-					$this->values[$key] = new Translation($key, $value, GeneralUtils::valueForMaxKeyInArray($this->sinceStack, $this->getVersion()), GeneralUtils::valueForMaxKeyInArray($this->updatedStack, $this->getVersion()), $this->lastParams);
+					$this->values[$key] = new Translation($key, $value,
+						GeneralUtils::valueForMaxKeyInArray($this->sinceStack, $this->getVersion()),
+						GeneralUtils::valueForMaxKeyInArray($this->updatedStack, $this->getVersion()),
+						$this->lastParams);
+					$this->lastParams = [];
 				}
 				$this->buffer = null;
 			}

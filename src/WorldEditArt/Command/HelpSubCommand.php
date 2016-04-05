@@ -28,18 +28,18 @@ class HelpSubCommand extends SubCommand{
 	}
 
 	public function getDescription(WorldEditArtUser $user) : string{
-		return $this->getMain()->translate(Terms::COMMAND_HELP_DESCRIPTION, $user->getLangs());
+		return $user->translate(Terms::COMMAND_HELP_DESCRIPTION);
 	}
 
 	public function getUsage(WorldEditArtUser $user) : string{
-		return $this->getMain()->translate(Terms::COMMAND_HELP_USAGE, $user->getLangs());
+		return $user->translate(Terms::COMMAND_HELP_USAGE);
 	}
 
 	public function run(WorldEditArtUser $user, string ...$args){
 		if(isset($args[0]) and !is_numeric($args[0])){
 			$cmd = $this->getMain()->getMainCommand()->getSubCommand($args[0]);
 			if($cmd !== null){
-				$this->getMain()->translate(Terms::COMMAND_HELP_INDIVIDUAL, $user->getLangs(), [
+				return $user->translate(Terms::COMMAND_HELP_INDIVIDUAL, [
 					"COMMAND_NAME" => $cmd->getName(),
 					"COMMAND_DESCRIPTION" => $cmd->getDetailedDescription($user),
 					"COMMAND_USAGE" => $cmd->getDetailedUsage($user),
@@ -69,10 +69,10 @@ class HelpSubCommand extends SubCommand{
 				$lines .= $user->translate(Terms::COMMAND_HELP_PAGE_ENTRY, [
 					"COMMAND_NAME" => $subCmd->getName(),
 					"COMMAND_DESCRIPTION" => $subCmd->getDescription($user),
-				]);
+					]) . "\n";
 			}
 		}
-		return $lines;
+		return rtrim($lines);
 	}
 
 	public function hasPermission(WorldEditArtUser $user){

@@ -109,7 +109,7 @@ class CommandParser{
 	}
 
 	public function optOpt(string $name, $empty = null, $default = null){
-		return $this->opts[$name] ?? ($this->switches[$name] ? $empty : $default);
+		return $this->opts[$name] ?? (isset($this->switches[$name]) ? $empty : $default);
 	}
 
 	/**

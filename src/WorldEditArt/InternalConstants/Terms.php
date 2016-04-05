@@ -31,7 +31,7 @@ interface Terms{
 	const COMMAND_HELP_DESCRIPTION = "command.help.description";
 	const COMMAND_HELP_USAGE = "command.help.usage";
 
-	const COMMAND_HELP_INDIVIDUAL = "command.help.header.individual";
+	const COMMAND_HELP_INDIVIDUAL = "command.help.individual";
 	const COMMAND_HELP_PAGE_HEADER = "command.help.pageHeader";
 	const COMMAND_HELP_PAGE_ENTRY = "command.help.pageEntry";
 
@@ -62,8 +62,8 @@ interface Terms{
 	const INFO_ZONE_ENTRY_DENIED = "info.zone.entryDenied";
 	const INFO_ZONE_LEFT = "info.zone.left";
 
-	const PHRASE_UNKNOWN = "phrase.unknown";
-	const PHRASE_UNDEFINED = "phrase.undefined";
+	const PHRASE_UNKNOWN = "phrasea.unknown";
+	const PHRASE_UNDEFINED = "phrases.undefined";
 	const PHRASE_SPACE_TYPE_CUBOID = "phrases.spaces.type.cuboid";
 	const PHRASE_SPACE_TYPE_CYLINDER_GENERIC = "phrases.spaces.type.cylinder.generic";
 	const PHRASE_SPACE_TYPE_CYLINDER_RIGHT = "phrases.spaces.type.cylinder.right";

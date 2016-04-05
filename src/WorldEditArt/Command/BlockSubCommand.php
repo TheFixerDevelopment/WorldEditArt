@@ -28,11 +28,10 @@ abstract class BlockSubCommand extends SubCommand{
 			$block = $user->getBookmark($params);
 		}
 		if($block->getFloorY() > WorldEditArt::MAX_Y or $block->getFloorY() < WorldEditArt::MIN_Y){
-			$user->sendMessage(Terms::COMMAND_ERROR_OUT_OF_RANGE);
-			return;
+			return $user->translate(Terms::COMMAND_ERROR_OUT_OF_RANGE);
 		}
 
-		$this->onRun($user, $block->getLevel()->getBlock($block->floor()), $params);
+		return $this->onRun($user, $block->getLevel()->getBlock($block->floor()), $params);
 	}
 
 	public abstract function onRun(WorldEditArtUser $user, Block $block, CommandParser $params);

@@ -24,9 +24,9 @@ use const WorldEditArt\XML_SUPPORTED;
 if(WorldEditArt::isDebug()){
 	function xml_parser_create(){
 		if(!XML_SUPPORTED){
-			throw new \Exception("xml_parser_create() doesn't exist");
+			throw new \Error("xml_parser_create() doesn't exist");
 		}
-		\xml_parser_create(...func_get_args());
+		return \xml_parser_create(...func_get_args());
 	}
 }
 

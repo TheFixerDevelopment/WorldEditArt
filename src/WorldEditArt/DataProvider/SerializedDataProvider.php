@@ -28,7 +28,7 @@ class SerializedDataProvider implements DataProvider{
 	/** @var string $zonePath */
 	private $zonePath;
 	/** @var Zone[] $zones */
-	private $zones;
+	private $zones = [];
 
 	public function __construct(WorldEditArt $main){
 		$this->main = $main;
@@ -142,12 +142,12 @@ class SerializedDataProvider implements DataProvider{
 
 	public static function readFile(string $file) : string{
 		$contents = file_get_contents($file);
-		switch($file){
+		switch(substr($contents, 0, $len = strlen(self::MODE_RAW))){
 			case self::MODE_RAW:
-				return $contents;
+				return substr($contents, $len);
 			case self::MODE_GZIP:
 			case self::MODE_DEFLATE:
-				return zlib_decode($contents);
+				return zlib_decode(substr($contents, $len));
 		}
 		throw new \UnexpectedValueException("No format prefix in file");
 	}

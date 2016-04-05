@@ -77,7 +77,7 @@ abstract class WorldEditArtUser implements Permissible{
 	}
 
 	public function sendMessage(string $id, array $vars = []){
-		$this->sendRawMessage((substr($id, 0, 5) === "%raw%") ? $id : $this->main->translate($id, $vars));
+		$this->sendRawMessage((substr($id, 0, 5) === "%raw%") ? $id : $this->main->translate($id, $this->getLangs(), $vars));
 	}
 
 	public function sendUsage(string $id, array $vars = []){

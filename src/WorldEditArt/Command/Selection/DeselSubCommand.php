@@ -26,11 +26,11 @@ class DeselSubCommand extends SubCommand{
 	}
 
 	public function getDescription(WorldEditArtUser $user) : string{
-		return Terms::COMMAND_DESEL_DESCRIPTION;
+		return $user->translate(Terms::COMMAND_DESEL_DESCRIPTION);
 	}
 
 	public function getUsage(WorldEditArtUser $user) : string{
-		return Terms::COMMAND_DESEL_USAGE;
+		return $user->translate(Terms::COMMAND_DESEL_USAGE);
 	}
 
 	public function run(WorldEditArtUser $user, string ...$args){
