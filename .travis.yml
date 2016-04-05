@@ -2,20 +2,17 @@ language: php
 php: ["7.0"]
 sudo: false
 install:
-- echo "Running test on $0"
+# PHP
 - pecl install channel://pecl.php.net/pthreads-3.1.6
 - pecl install channel://pecl.php.net/weakref-0.3.2
 - echo | pecl install channel://pecl.php.net/yaml-2.0.0RC7
-- cd ..
-- mkdir pm
-- cd pm
-- wget -q -O PocketMine-MP.phar http://pmt.mcpe.me/pmb/dl.php?branch=master
-- mkdir plugins
-- wget -O plugins/PluginChecker.php https://gist.githubusercontent.com/PEMapModder/af032e15cde357fd378dff7ca3897782/raw/d82e74bb5ff5264133230f8c724e1c4d573174a6/PluginChecker.php
+# PocketMine
+- mkdir ../pm && cd ../pm && wget -q -O PocketMine-MP.phar http://pmt.mcpe.me/pmb/dl.php?branch=master
+# plugin
+- mkdir plugins && wget -O plugins/PluginChecker.php https://gist.githubusercontent.com/PEMapModder/af032e15cde357fd378dff7ca3897782/raw/d82e74bb5ff5264133230f8c724e1c4d573174a6/PluginChecker.php
 
 before_script:
-- cd $TRAVIS_BUILD_DIR
-- php compile.php --travis
+- cd $TRAVIS_BUILD_DIR && php compile.php --travis
 - cp compile/WorldEditArt_Travis.phar ../pm/plugins
 
 script:
