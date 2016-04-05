@@ -33,7 +33,7 @@ class SphereSubCommand extends BlockSubCommand{
 		$selName = $params->opt("n", "default");
 		$sel = $user->getSelection($selName);
 		if($sel !== null){
-			$user->sendMessage(Terms::COMMAND_GENERIC_SUBSTITUTING, ["SEL" => $sel->describe($user)]);
+			$user->sendMessage(Terms::COMMAND_GENERIC_SUBSTITUTING, ["ORIGINAL" => $sel->describe($user)]);
 		}
 		$new = new SphereSpace($block->getLevel(), $block, $radius);
 		$user->setSelection($new, $selName);

@@ -132,7 +132,7 @@
 				<description>Select a sphere</description>
 				<usage>//sph &lt;radius&gt;</usage>
 				<success vars="NEW,NAME">
-					${FORMAT_SUCCESS}Selected ${FORMAT_HIGHLIGHT} as ${FORMAT_HIGHLIGHT_2}${NEW}
+					${FORMAT_SUCCESS}Selected ${FORMAT_HIGHLIGHT}${NAME} ${FORMAT_SUCCESS}as ${FORMAT_HIGHLIGHT_2}${NEW}
 				</success>
 			</sphere>
 		</command>

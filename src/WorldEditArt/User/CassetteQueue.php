@@ -107,4 +107,14 @@ class CassetteQueue implements BulkJob{
 	public function hasMore() : bool{
 		return !$this->user->isClosed();
 	}
+
+	public function __debugInfo(){
+		return [
+			"user" => $this->user->getUniqueName(),
+			"undoCounter" => $this->undoCounter,
+			"undoQueue" => $this->undoQueue,
+			"execQueue" => $this->execQueue,
+			"redoQueue" => $this->redoQueue,
+		];
+	}
 }
