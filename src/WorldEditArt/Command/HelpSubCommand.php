@@ -24,7 +24,7 @@ class HelpSubCommand extends SubCommand{
 	}
 
 	public function getAliases() : array{
-		return [""];
+		return ["", "man"];
 	}
 
 	public function getDescription(WorldEditArtUser $user) : string{
@@ -64,11 +64,11 @@ class HelpSubCommand extends SubCommand{
 
 	private function fetchOutput(WorldEditArtUser $user) : string{
 		$lines = "";
-		foreach($this->getMain()->getMainCommand()->getSubCommands() as $subCmd){
+		foreach($this->getMain()->getMainCommand()->getSubCommands(true) as $subCmd){
 			if($subCmd->hasPermission($user)){
 				$lines .= $user->translate(Terms::COMMAND_HELP_PAGE_ENTRY, [
-					"COMMAND_NAME" => $subCmd->getName(),
-					"COMMAND_DESCRIPTION" => $subCmd->getDescription($user),
+						"COMMAND_NAME" => $subCmd->getName(),
+						"COMMAND_DESCRIPTION" => $subCmd->getDescription($user),
 					]) . "\n";
 			}
 		}

@@ -101,9 +101,20 @@ class WorldEditArtCommand extends Command implements PluginIdentifiableCommand{
 	}
 
 	/**
+	 * @param bool $filterAliases
+	 *
 	 * @return SubCommand[]
 	 */
-	public function getSubCommands() : array{
+	public function getSubCommands(bool $filterAliases) : array{
+		if($filterAliases){
+			$subCmds = [];
+			foreach($this->subCmds as $k => $v){
+				if($k === $v->getName()){
+					$subCmds[] = $v;
+				}
+			}
+			return $subCmds;
+		}
 		return $this->subCmds;
 	}
 
