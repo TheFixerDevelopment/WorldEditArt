@@ -36,5 +36,6 @@ class BatchBlockStream implements BlockStream{
 			array_shift($this->streams);
 			goto next;
 		}
+		return $next;
 	}
 }
