@@ -88,7 +88,7 @@ function parsePerms(SimpleXMLElement $element, array $parents){
 	return $ret;
 }
 
-$info = json_decode(file_get_contents("compile/info.json"));
+$info = json_decode(file_get_contents("nowhere.json"));
 $NAME = $info->name;
 
 $CLASS = "Dev";
@@ -102,7 +102,7 @@ if(isset($opts["beta"])){
 }
 
 $VERSION = $info->version->major . "." . $info->version->minor . "-" . $CLASS . "#" . ($info->nextBuild++);
-file_put_contents("compile/info.json", json_encode($info, JSON_BIGINT_AS_STRING | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+file_put_contents("nowhere.json", json_encode($info, JSON_BIGINT_AS_STRING | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
 $permissions = [];
 if(is_file("permissions.xml")){
