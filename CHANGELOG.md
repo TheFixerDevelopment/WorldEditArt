@@ -12,5 +12,7 @@ The plugin version comprises four numbers:
 
 ## [Unreleased] (Epsilon 4.1.0.0)
 ### Added
+- Basic player sessions
+- Construction zones
 
 [Unreleased]: https://github.com/LegendOfMCPE/WorldEditArt/compare/delta/v3.0...HEAD
