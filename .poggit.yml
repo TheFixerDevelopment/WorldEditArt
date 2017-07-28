@@ -1,0 +1,12 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/LegendOfMCPE/WorldEditArt
+projects:
+  WorldEditArt-Epsilon:
+    path: WorldEditArt/
+    icon: plugin_icon.png
+
+    libs:
+      - src: BlockHorizons/libgeom/libgeom
+        version: "^2.0"
+      - src: Falkirks/spoondetector/spoondetector
+        version: "^0"
+...

@@ -1,0 +1,61 @@
+name: WorldEditArt-Epsilon
+version: 4.0.0.0 # {code name (rewrite)}.{major version (API change)}.{minor version (API addition)}.{patch version (identical API)}
+authors:
+- SOFe
+
+main: LegendsOfMCPE\WorldEditArt\Epsilon\WorldEditArt
+api:
+- 3.0.0-ALPHA7
+extensions:
+  mbstring: "*"
+
+permissions: # default for permission.default is "op"
+  worldeditart:
+    description: Full control over WorldEditArt
+    children:
+      worldeditart.status:
+        description: Allows using //status
+      worldeditart.builder:
+        description: Permissions for builders
+        children:
+          worldeditart.builder.session:
+            description: Permission to manage sessions
+            children:
+              worldeditart.builder.session.start:
+                description: Allows starting a session either explicitly or implicitly.
+              worldeditart.builder.session.close:
+                description: Allows closing a session explicitly through //session close
+          worldeditart.builder.czone:
+            description: Permission to manage construction zones for building
+            children:
+              worldeditart.builder.czone.lock:
+                description: Allows temporarily locking a construction zone
+                children:
+                  worldeditart.builder.czone.lock.edit:
+                    description: Allows temporarily locking a construction zone for world-editing
+                  worldeditart.builder.czone.lock.blocks:
+                    description: Allows temporarily locking a construction zone for world-editing + block placement/breaking
+                  worldeditart.builder.czone.lock.entry:
+                    description: Allows temporarily locking a construction zone for world-editing + block placement/breaking + entry
+              worldeditart.builder.czone.view:
+                description: Allows viewing information of construction zones
+              worldeditart.builder.czone.unlockself:
+                description: Allows unlocking a construction zone previously locked for oneself
+              worldeditart.builder.czone.unlockother:
+                description: Allows unlocking a construction zone previously locked for others
+              worldeditart.builder.czone.entry:
+                description: Allows entering a construction zone entry-locked by others
+              worldeditart.builder.czone.blocks:
+                description: Allows placing/breaking blocks in a construction zone blocks-locked by others
+              worldeditart.builder.czone.edit:
+                description: Allows ignoring construction zone world-edit locks
+      worldeditart.admin:
+        description: Permissions for admins
+        children:
+          worldeditart.admin.czone:
+            description: Permission to supervise construction zones
+            children:
+              worldeditart.admin.czone.change:
+                description: Allows creation/deletion of construction zones
+              worldeditart.admin.czone.bypass:
+                description: Allows construction outside construction zones
