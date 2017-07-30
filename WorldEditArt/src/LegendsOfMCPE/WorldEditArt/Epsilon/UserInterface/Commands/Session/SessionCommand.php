@@ -15,9 +15,10 @@
 
 declare(strict_types=1);
 
-namespace LegendsOfMCPE\WorldEditArt\Epsilon\UserInterface\Commands;
+namespace LegendsOfMCPE\WorldEditArt\Epsilon\UserInterface\Commands\Session;
 
 use LegendsOfMCPE\WorldEditArt\Epsilon\BuilderSession;
+use LegendsOfMCPE\WorldEditArt\Epsilon\UserInterface\Commands\WorldEditArtCommand;
 use LegendsOfMCPE\WorldEditArt\Epsilon\UserInterface\PlayerBuilderSession;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -27,6 +28,9 @@ use pocketmine\Player;
  */
 abstract class SessionCommand extends WorldEditArtCommand{
 	public function execute(CommandSender $sender, string $commandLabel, array $args){
+		if(!$this->testPermission($sender)){
+			return;
+		}
 		if(!($sender instanceof Player)){
 			$sender->sendMessage("Please either run this command in-game, or use //mi to execute this command.");
 			return;

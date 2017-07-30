@@ -22,13 +22,17 @@ use LegendsOfMCPE\WorldEditArt\Epsilon\UserInterface\PlayerBuilderSession;
 use LegendsOfMCPE\WorldEditArt\Epsilon\WorldEditArt;
 use pocketmine\command\CommandSender;
 
-class StatusCommand extends WorldEditArtCommand{
+class WeaStatusCommand extends WorldEditArtCommand{
 	public function __construct(WorldEditArt $plugin){
-		parent::__construct($plugin, "/status", "View information about WorldEditArt and you", "/status", ["/info"], Consts::PERM_STATUS);
+		parent::__construct($plugin, "/status", "View information about WorldEditArt and you", "/status", ["/info", "/"], Consts::PERM_STATUS);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args){
+		if(!$this->testPermission($sender)){
+			return;
+		}
 		$sender->sendMessage("Using " . $this->getPlugin()->getFullName());
+		$sender->sendMessage("You may find documentation for this version of WorldEditArt at {$this->getPlugin()->getDescription()->getWebsite()}/README.md");
 		$sessions = $this->getPlugin()->getSessionsOf($sender);
 		/** @noinspection PhpIllegalArrayKeyTypeInspection */
 		if(count($sessions) > 0){

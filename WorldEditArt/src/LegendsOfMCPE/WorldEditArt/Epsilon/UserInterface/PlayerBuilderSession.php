@@ -47,7 +47,7 @@ class PlayerBuilderSession extends BuilderSession{
 		return "player;" . strtolower($this->player->getName());
 	}
 
-	public function getLocation() : Location{
+	protected function getRealLocation() : Location{
 		return $this->player->asLocation();
 	}
 

@@ -45,7 +45,7 @@ class MinionBuilderSession extends BuilderSession{
 		return "Minion:" . get_class($this->owner) . ":" . $this->owner->getName() . ":" . $this->name;
 	}
 
-	public function getLocation() : Location{
+	protected function getRealLocation() : Location{
 		return $this->location;
 	}
 

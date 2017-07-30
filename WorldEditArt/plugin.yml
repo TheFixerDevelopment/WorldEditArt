@@ -1,5 +1,6 @@
 name: WorldEditArt-Epsilon
 version: 4.1.0.0 # {code name (rewrite)}.{major version (API change)}.{minor version (API addition)}.{patch version (identical API)}
+website: https://github.com/LegendOfMCPE/WorldEditArt/blob/v4.1.0/README.md # this is uesd in StatusCommand.php
 authors:
 - SOFe
 
@@ -8,10 +9,13 @@ api:
 - 3.0.0-ALPHA7
 extensions:
   mbstring: "*"
+softdepend:
+- SimpleWarp
+
 
 permissions: # default for permission.default is "op"
   worldeditart:
-    description: Full control over WorldEditArt
+    description: Full control over WorldEditArt. Please consult the documentation at https://github.com/LegendOfMCPE/WorldEditArt/blob/epsilon/v4.1.0/README.md for details.
     children:
       worldeditart.status:
         description: Allows using //status
@@ -25,6 +29,30 @@ permissions: # default for permission.default is "op"
                 description: Allows starting a session either explicitly or implicitly.
               worldeditart.builder.session.close:
                 description: Allows closing a session explicitly through //session close
+          worldeditart.builder.bookmark:
+            description: Permission to manage and use bookmarks
+            children:
+              worldeditart.builder.bookmark.add:
+                description: Allows adding bookmarks
+              worldeditart.builder.bookmark.remove:
+                description: Allows removing bookmarks
+              worldeditart.builder.bookmark.list:
+                description: Allows listing bookmarks
+              worldeditart.builder.bookmark.tp:
+                description: Allows teleporting to bookmarks
+          worldeditart.builder.at:
+            description: Allows running session commands mocking another location
+            children:
+              worldeditart.builder.at.absolute:
+                description: Allows running session commands mocking the location specified with absolute coordinates
+              worldeditart.builder.at.relative:
+                description: Allows running session commands mocking the location specified with relative coordinates
+              worldeditart.builder.at.bookmark:
+                description: Allows running session commands mocking location as bookmark
+              worldeditart.builder.at.spawn:
+                description: Allows running session commands mocking location as spawn
+              worldeditart.builder.at.warp:
+                description: Allows running session commands mocking location as SimpleWarp warp
           worldeditart.builder.czone:
             description: Permission to manage construction zones for building
             children:

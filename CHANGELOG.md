@@ -14,5 +14,6 @@ The plugin version comprises four numbers:
 ### Added
 - Basic player sessions
 - Construction zones
+- Bookmarks and `//at`
 
 [Unreleased]: https://github.com/LegendOfMCPE/WorldEditArt/compare/delta/v3.0...HEAD

@@ -18,6 +18,8 @@ declare(strict_types=1);
 namespace LegendsOfMCPE\WorldEditArt\Epsilon\LibgeomAdapter;
 
 use pocketmine\level\Level;
+use pocketmine\level\Location;
+use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\utils\TextFormat;
 use sofe\libgeom\Shape;
@@ -66,12 +68,55 @@ abstract class ShapeDescriptor{
 		}
 	}
 
-	private static function formatVector(Vector3 $vector) : string{
+	public static function formatLocation(Location $location, string $normalColor) : string{
+		return TextFormat::AQUA . self::formatVector($location) .
+			TextFormat::LIGHT_PURPLE . " (" . self::yawAsReducedBearing($location->yaw) . ", " . self::pitchAsBearing($location->pitch) .
+			") {$normalColor}in world " . TextFormat::BLUE . self::nameLevel($location->getLevel()) . $normalColor;
+	}
+
+	/**
+	 * @param float $yaw the azimuth in <em>degrees</em>, i.e. number of degrees clockwise from south
+	 *
+	 * @return string
+	 */
+	public static function yawAsReducedBearing(float $yaw) : string{
+		while($yaw >= 360){
+			$yaw -= 360;
+		}
+		while($yaw < 0){
+			$yaw += 360;
+		}
+
+		if($yaw < 90){
+			return "S " . round($yaw, 2) . "° W";
+		}elseif($yaw < 180){
+			return "N " . round(180 - $yaw, 2) . "° W";
+		}elseif($yaw < 270){
+			return "N " . round($yaw - 180, 2) . "° E";
+		}else{
+			return "S " . round(360 - $yaw, 2) . "° E";
+		}
+	}
+
+	/**
+	 * @param float $pitch the pitch in <em>degrees</em>, i.e. number of degrees downwards from the horizontal
+	 *
+	 * @return string
+	 */
+	public static function pitchAsBearing(float $pitch) : string{
+		return $pitch > 0 ? (round($pitch, 2) . "° down") : (round(-$pitch, 2) . "° up");
+	}
+
+	public static function formatPosition(Position $position, string $normalColor) : string{
+		return TextFormat::AQUA . self::formatVector($position) . " {$normalColor}in world " . TextFormat::LIGHT_PURPLE . self::nameLevel($position->getLevel()) . $normalColor;
+	}
+
+	public static function formatVector(Vector3 $vector) : string{
 		return "(" . round($vector->x, 2) . ", " . round($vector->y, 2) . ", " . round($vector->z, 2) . ")";
 	}
 
-	private static function nameLevel(Level $level) : string{
-		return $level->getName() . ($level->getFolderName() === $level->getName() ? "" : " ({$level->getFolderName()})");
+	public static function nameLevel(Level $level) : string{
+		return $level->getFolderName() . ($level->getFolderName() === $level->getName() ? "" : " ({$level->getName()})");
 	}
 
 	private static function unknownFormat(int $format){

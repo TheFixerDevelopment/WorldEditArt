@@ -41,15 +41,69 @@ abstract class BuilderSession{
 	/** @var WorldEditArt */
 	private $plugin;
 
+	/** @var Location|null */
+	private $overridingLocation = null;
+	/** @var Location[] */
+	private $bookmarks = [];
+
 	public function __construct(WorldEditArt $plugin){
 		$this->plugin = $plugin;
+		// TODO load bookmarks
+	}
+
+	public function close(){
+		// TODO save bookmarks
+		foreach($this->plugin->getConstructionZones() as $zone){
+			if($zone->getLockingSession() === $this){
+				$zone->unlock();
+			}
+		}
 	}
 
 	public abstract function getOwner() : CommandSender;
 
 	public abstract function getUniqueId() : string;
 
-	public abstract function getLocation() : Location;
+	public function getLocation() : Location{
+		return $this->overridingLocation ?? $this->getRealLocation();
+	}
+
+	protected abstract function getRealLocation() : Location;
+
+	public function executeAtLocation(Location $location, callable $function){
+		$old = $this->overridingLocation;
+		$this->overridingLocation = $location;
+		$function();
+		$this->overridingLocation = $old;
+	}
+
+	/**
+	 * @return Location[]
+	 */
+	public function getBookmarks() : array{
+		return $this->bookmarks;
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return null|Location
+	 */
+	public function getBookmark(string $name){
+		return $this->bookmarks[$name] ?? null;
+	}
+
+	public function hasBookmark(string $name) : bool{
+		return isset($this->bookmarks[$name]);
+	}
+
+	public function setBookmark(string $name, Location $location){
+		$this->bookmarks[$name] = $location;
+	}
+
+	public function removeBookmark(string $name){
+		unset($this->bookmarks[$name]);
+	}
 
 	public function getPlugin() : WorldEditArt{
 		return $this->plugin;
@@ -70,14 +124,5 @@ abstract class BuilderSession{
 
 	public function isAvailable() : bool{
 		return true;
-	}
-
-	public function close(){
-		// TODO save data
-		foreach($this->plugin->getConstructionZones() as $zone){
-			if($zone->getLockingSession() === $this){
-				$zone->unlock();
-			}
-		}
 	}
 }
