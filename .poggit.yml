@@ -1,6 +1,6 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/LegendOfMCPE/WorldEditArt
 projects:
-  WorldEditArt-Epsilon:
+  WorldEditArt-GenisysPro:
     path: WorldEditArt/
     icon: plugin_icon.png
 
