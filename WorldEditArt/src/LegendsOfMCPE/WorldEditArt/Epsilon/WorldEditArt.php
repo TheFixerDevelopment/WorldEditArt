@@ -28,7 +28,6 @@ use pocketmine\Server;
 use pocketmine\utils\Binary;
 use sofe\libgeom\LibgeomBinaryStream;
 use sofe\libgeom\UnsupportedOperationException;
-use spoondetector\SpoonDetector;
 
 class WorldEditArt extends PluginBase{
 	/** @var ConstructionZone[] */
